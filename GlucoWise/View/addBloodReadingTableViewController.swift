@@ -18,6 +18,10 @@ class addBloodReadingTableViewController: UITableViewController {
         }
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelBtnTapped))
+    }
+    @objc func cancelBtnTapped(){
+        dismiss(animated: true,completion: nil)
     }
 
 
