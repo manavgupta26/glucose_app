@@ -17,6 +17,8 @@ class addReminderTableViewController: UITableViewController{
         
     @IBOutlet weak var reminderTimePicker: UIDatePicker!
     
+    @IBOutlet weak var selectReminderRepeat: UIButton!
+    
     
     
     
@@ -24,7 +26,9 @@ class addReminderTableViewController: UITableViewController{
         super.viewDidLoad()
         
     }
-    
+    @IBAction func repeatReminder(_ sender: UIAction) {
+        self.selectReminderRepeat.setTitle(sender.title, for: .normal)
+    }
  
 
 }

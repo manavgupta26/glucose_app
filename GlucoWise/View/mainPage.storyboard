@@ -6,6 +6,7 @@
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -539,6 +540,28 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EG9-Cb-Tcn">
+                                                    <rect key="frame" x="239" y="7" width="90" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="tintColor" red="0.74901962280000001" green="0.74901962280000001" blue="0.75294119120000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <menu key="menu" title="Never" id="Aps-nD-q5M">
+                                                        <menuOptions key="menuOptions" singleSelection="YES"/>
+                                                        <children>
+                                                            <command title="Never" id="qnD-1t-CVb"/>
+                                                            <command title="Daily" id="TZq-zs-KUO"/>
+                                                            <command title="Weekdays" id="NrQ-Qe-yfJ"/>
+                                                            <command title="Weekends" id="GeT-rX-15h"/>
+                                                            <command title="Monthly" id="NJl-ZK-18U"/>
+                                                            <command title="Every 3 months" id="pVB-9V-qrb"/>
+                                                        </children>
+                                                    </menu>
+                                                    <state key="normal" title="Button">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <buttonConfiguration key="configuration" style="tinted" title="Never">
+                                                        <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </buttonConfiguration>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -552,6 +575,7 @@
                     </tableView>
                     <connections>
                         <outlet property="reminderTimePicker" destination="dhe-4L-GfN" id="oC8-oL-qRr"/>
+                        <outlet property="selectReminderRepeat" destination="EG9-Cb-Tcn" id="Zs2-zc-tJP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pv2-JK-rhF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
