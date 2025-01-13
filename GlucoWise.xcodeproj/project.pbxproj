@@ -1,0 +1,616 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6830CAFF2D34C8DA00CA6EDE /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 6830CAFE2D34C8DA00CA6EDE /* DGCharts */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6594EE432D00158A00948C56 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6594EE242D00158800948C56 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6594EE2B2D00158800948C56;
+			remoteInfo = GlucoWise;
+		};
+		6594EE4D2D00158A00948C56 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6594EE242D00158800948C56 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6594EE2B2D00158800948C56;
+			remoteInfo = GlucoWise;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6594EE2C2D00158800948C56 /* GlucoWise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlucoWise.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6594EE422D00158A00948C56 /* GlucoWiseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlucoWiseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6594EE4C2D00158A00948C56 /* GlucoWiseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlucoWiseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6594EE542D00158A00948C56 /* Exceptions for "GlucoWise" folder in "GlucoWise" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6594EE2B2D00158800948C56 /* GlucoWise */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6594EE2E2D00158800948C56 /* GlucoWise */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6594EE542D00158A00948C56 /* Exceptions for "GlucoWise" folder in "GlucoWise" target */,
+			);
+			path = GlucoWise;
+			sourceTree = "<group>";
+		};
+		6594EE452D00158A00948C56 /* GlucoWiseTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GlucoWiseTests;
+			sourceTree = "<group>";
+		};
+		6594EE4F2D00158A00948C56 /* GlucoWiseUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GlucoWiseUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6594EE292D00158800948C56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6830CAFF2D34C8DA00CA6EDE /* DGCharts in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6594EE3F2D00158A00948C56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6594EE492D00158A00948C56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6594EE232D00158800948C56 = {
+			isa = PBXGroup;
+			children = (
+				6594EE2E2D00158800948C56 /* GlucoWise */,
+				6594EE452D00158A00948C56 /* GlucoWiseTests */,
+				6594EE4F2D00158A00948C56 /* GlucoWiseUITests */,
+				6830CAFD2D34C8DA00CA6EDE /* Frameworks */,
+				6594EE2D2D00158800948C56 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6594EE2D2D00158800948C56 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6594EE2C2D00158800948C56 /* GlucoWise.app */,
+				6594EE422D00158A00948C56 /* GlucoWiseTests.xctest */,
+				6594EE4C2D00158A00948C56 /* GlucoWiseUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6830CAFD2D34C8DA00CA6EDE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6594EE2B2D00158800948C56 /* GlucoWise */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6594EE552D00158A00948C56 /* Build configuration list for PBXNativeTarget "GlucoWise" */;
+			buildPhases = (
+				6594EE282D00158800948C56 /* Sources */,
+				6594EE292D00158800948C56 /* Frameworks */,
+				6594EE2A2D00158800948C56 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6830CAFC2D34C88A00CA6EDE /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6594EE2E2D00158800948C56 /* GlucoWise */,
+			);
+			name = GlucoWise;
+			packageProductDependencies = (
+				6830CAFE2D34C8DA00CA6EDE /* DGCharts */,
+			);
+			productName = GlucoWise;
+			productReference = 6594EE2C2D00158800948C56 /* GlucoWise.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6594EE412D00158A00948C56 /* GlucoWiseTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6594EE5A2D00158A00948C56 /* Build configuration list for PBXNativeTarget "GlucoWiseTests" */;
+			buildPhases = (
+				6594EE3E2D00158A00948C56 /* Sources */,
+				6594EE3F2D00158A00948C56 /* Frameworks */,
+				6594EE402D00158A00948C56 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6594EE442D00158A00948C56 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6594EE452D00158A00948C56 /* GlucoWiseTests */,
+			);
+			name = GlucoWiseTests;
+			packageProductDependencies = (
+			);
+			productName = GlucoWiseTests;
+			productReference = 6594EE422D00158A00948C56 /* GlucoWiseTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6594EE4B2D00158A00948C56 /* GlucoWiseUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6594EE5D2D00158A00948C56 /* Build configuration list for PBXNativeTarget "GlucoWiseUITests" */;
+			buildPhases = (
+				6594EE482D00158A00948C56 /* Sources */,
+				6594EE492D00158A00948C56 /* Frameworks */,
+				6594EE4A2D00158A00948C56 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6594EE4E2D00158A00948C56 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6594EE4F2D00158A00948C56 /* GlucoWiseUITests */,
+			);
+			name = GlucoWiseUITests;
+			packageProductDependencies = (
+			);
+			productName = GlucoWiseUITests;
+			productReference = 6594EE4C2D00158A00948C56 /* GlucoWiseUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6594EE242D00158800948C56 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1610;
+				LastUpgradeCheck = 1610;
+				TargetAttributes = {
+					6594EE2B2D00158800948C56 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					6594EE412D00158A00948C56 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = 6594EE2B2D00158800948C56;
+					};
+					6594EE4B2D00158A00948C56 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = 6594EE2B2D00158800948C56;
+					};
+				};
+			};
+			buildConfigurationList = 6594EE272D00158800948C56 /* Build configuration list for PBXProject "GlucoWise" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6594EE232D00158800948C56;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6830CAFA2D34C7BD00CA6EDE /* XCRemoteSwiftPackageReference "Charts" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6594EE2D2D00158800948C56 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6594EE2B2D00158800948C56 /* GlucoWise */,
+				6594EE412D00158A00948C56 /* GlucoWiseTests */,
+				6594EE4B2D00158A00948C56 /* GlucoWiseUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6594EE2A2D00158800948C56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6594EE402D00158A00948C56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6594EE4A2D00158A00948C56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6594EE282D00158800948C56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6594EE3E2D00158A00948C56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6594EE482D00158A00948C56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6594EE442D00158A00948C56 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6594EE2B2D00158800948C56 /* GlucoWise */;
+			targetProxy = 6594EE432D00158A00948C56 /* PBXContainerItemProxy */;
+		};
+		6594EE4E2D00158A00948C56 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6594EE2B2D00158800948C56 /* GlucoWise */;
+			targetProxy = 6594EE4D2D00158A00948C56 /* PBXContainerItemProxy */;
+		};
+		6830CAFC2D34C88A00CA6EDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 6830CAFB2D34C88A00CA6EDE /* DGCharts */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6594EE562D00158A00948C56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AK7WCH3W36;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GlucoWise/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CodeSyns.GlucoWise;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6594EE572D00158A00948C56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AK7WCH3W36;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GlucoWise/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CodeSyns.GlucoWise;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6594EE582D00158A00948C56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6594EE592D00158A00948C56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6594EE5B2D00158A00948C56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CodeSyns.GlucoWiseTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlucoWise.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GlucoWise";
+			};
+			name = Debug;
+		};
+		6594EE5C2D00158A00948C56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CodeSyns.GlucoWiseTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlucoWise.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GlucoWise";
+			};
+			name = Release;
+		};
+		6594EE5E2D00158A00948C56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CodeSyns.GlucoWiseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GlucoWise;
+			};
+			name = Debug;
+		};
+		6594EE5F2D00158A00948C56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = CodeSyns.GlucoWiseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GlucoWise;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6594EE272D00158800948C56 /* Build configuration list for PBXProject "GlucoWise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6594EE582D00158A00948C56 /* Debug */,
+				6594EE592D00158A00948C56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6594EE552D00158A00948C56 /* Build configuration list for PBXNativeTarget "GlucoWise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6594EE562D00158A00948C56 /* Debug */,
+				6594EE572D00158A00948C56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6594EE5A2D00158A00948C56 /* Build configuration list for PBXNativeTarget "GlucoWiseTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6594EE5B2D00158A00948C56 /* Debug */,
+				6594EE5C2D00158A00948C56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6594EE5D2D00158A00948C56 /* Build configuration list for PBXNativeTarget "GlucoWiseUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6594EE5E2D00158A00948C56 /* Debug */,
+				6594EE5F2D00158A00948C56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6830CAFA2D34C7BD00CA6EDE /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6830CAFB2D34C88A00CA6EDE /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6830CAFA2D34C7BD00CA6EDE /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		6830CAFE2D34C8DA00CA6EDE /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6830CAFA2D34C7BD00CA6EDE /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6594EE242D00158800948C56 /* Project object */;
+}
