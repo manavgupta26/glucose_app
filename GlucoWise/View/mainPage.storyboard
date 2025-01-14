@@ -717,6 +717,13 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4k-jc-KKW">
+                                            <rect key="frame" x="7" y="53" width="24" height="11"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="pEJ-QI-gWD" secondAttribute="bottom" constant="20" id="0en-qW-cKQ"/>
@@ -741,10 +748,11 @@
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="128" height="129"/>
                                 <connections>
-                                    <outlet property="glucoseChangeLabel" destination="a2g-dM-ZL0" id="rAA-Tf-GOO"/>
-                                    <outlet property="glucoseLabel" destination="x3W-bK-oVl" id="7o8-Aq-QIM"/>
-                                    <outlet property="glucoseLastUppdatedLbl" destination="R96-Lw-XMP" id="Rj6-te-Sv6"/>
-                                    <outlet property="glucoseReactionLbl" destination="pEJ-QI-gWD" id="I1b-4C-IYQ"/>
+                                    <outlet property="glucoseChangeLabel" destination="a2g-dM-ZL0" id="2gP-dM-ghJ"/>
+                                    <outlet property="glucoseLabel" destination="x3W-bK-oVl" id="etb-2Z-FHs"/>
+                                    <outlet property="glucoseLastUppdatedLbl" destination="R96-Lw-XMP" id="dp1-qB-h4A"/>
+                                    <outlet property="glucoseReactionLbl" destination="pEJ-QI-gWD" id="oDv-F4-CEm"/>
+                                    <outlet property="glucoseValueLabel" destination="o4k-jc-KKW" id="5qR-r4-Tkm"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="DietaryRecommendationCell" id="fqW-Tb-wHX" customClass="DailyRecommendationsCollectionViewCell" customModule="GlucoWise" customModuleProvider="target">

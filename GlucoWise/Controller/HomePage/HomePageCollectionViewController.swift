@@ -1,13 +1,11 @@
 import UIKit
-
+let glucoseDataSet = GlucoseDataSet()
 class HomePageCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     let sectionNames = ["Calendar", "Daily Average", "Dietary Recommendations", "Tips", "Graph Insights"]
     
     
     
-    var days: [String] = ["M", "T", "W", "T", "F", "St", "S"]
-    var dates: [String] = ["1", "2", "3", "4", "5", "6", "7"] // Example dates for the week
-    var selectedStates: [Bool] = [false, false, false, true, false, false, false] // Example for selection states
+    // Example for selection states
     
     let glucoseLevels = [120, 110, 130, 150, 95]
     let mealData = [
@@ -31,8 +29,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         //        welcomeLabel.text = "Welcome, Sarah"
         
         // Set up the collection view delegate and data source
-        print("Days: \(days)")
-        print("Dates: \(dates)")
+        collectionView.backgroundColor =  UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
         print("Glucose Levels: \(glucoseLevels)")
         collectionView.register(CalenderCellCollectionViewCell.self, forCellWithReuseIdentifier: "CalenderCell")
         collectionView.register(DailyAverageCollectionViewCell.self, forCellWithReuseIdentifier: "DailyAverageCell")
@@ -57,7 +54,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count: Int
         switch section {
-        case 0: count = days.count
+        case 0: count = glucoseDataSet.glucoseReadings.count
         case 1: count = 1
         case 2: count = 1
         case 3: count = tipsData.count
@@ -69,15 +66,31 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // Toggle the selected state
-        for index in selectedStates.indices {
-                    selectedStates[index] = false
-                }
-                
-                // Select the tapped item
-            selectedStates[indexPath.item] = true
-                
-                // Reload the collection view to update the appearance
+        switch indexPath.section {
+        case 0:
+            
+            // Deselect all readings
+            for i in 0..<glucoseDataSet.glucoseReadings.count {
+                glucoseDataSet.glucoseReadings[i].isSelected = false
+            }
+            
+            // Mark the selected reading
+            glucoseDataSet.glucoseReadings[indexPath.item].isSelected = true
+            
+            // Reload the collection view to reflect changes
             collectionView.reloadData()
+            
+            // Fetch and display additional details for the selected date
+            let selectedReading = glucoseDataSet.glucoseReadings[indexPath.item]
+            print("Selected Reading: \(selectedReading)")
+            
+        case 1:
+            // Perform actions for section 1
+            collectionView.reloadData()
+            
+        default:
+            break
+        }
 
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -88,15 +101,21 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
             // First cell: Date and day selection
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalenderCell", for: indexPath) as! CalenderCellCollectionViewCell
-            let day = days[indexPath.item]
-            let date = dates[indexPath.item]
-            let isSelected = selectedStates[indexPath.item]
-            
-            cell.dayLabel?.text = day
-            cell.dateLabel?.text = date
-            
+            let reading = glucoseDataSet.glucoseReadings[indexPath.item]
+            // Extract the date components
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            if let date = dateFormatter.date(from: reading.date){
+                dateFormatter.dateFormat = "E" // Day abbreviation (e.g., Mon, Tue)
+                let day = dateFormatter.string(from: date)
+                dateFormatter.dateFormat = "d" // Day of the month (e.g., 1, 2)
+                let dayOfMonth = dateFormatter.string(from: date)
+                
+                cell.dayLabel?.text = day
+                cell.dateLabel?.text = dayOfMonth
+            }
             // Update background color based on selection state
-            if isSelected {
+            if reading.isSelected {
                 cell.contentView.backgroundColor = UIColor(red: 85/255, green: 173/255, blue: 156/255, alpha: 1.0)
                 cell.dayLabel?.textColor = UIColor.white
                 cell.dateLabel?.textColor = UIColor.white
@@ -104,8 +123,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 cell.contentView.backgroundColor = UIColor.systemBackground
                 cell.dayLabel?.textColor = UIColor.label
                 cell.dateLabel?.textColor = UIColor.label
-            }
-            
+                
+                }
             let cellHeight = cell.bounds.size.height
             let cellWidth = cell.bounds.size.width
             let radius = min(cellHeight, cellWidth) / 2  // Use the smaller dimension to ensure it's circular
@@ -116,17 +135,44 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DailyAverageCell", for: indexPath) as! DailyAverageCollectionViewCell
-            let glucoseLevel = glucoseLevels[selectedIndex]
-            cell.glucoseLabel?.text = "\(glucoseLevel)"
-            cell.glucoseChangeLabel?.text = "5% since yesterday"
-            cell.glucoseLastUppdatedLbl?.text = "Updated at 8:00 AM"
-            if glucoseLevel < 80 {
-                cell.glucoseReactionLbl?.image = badEmoji
-            } else if glucoseLevel >= 80 && glucoseLevel <= 140 {
-                cell.glucoseReactionLbl?.image = goodEmoji
+            cell.contentView.backgroundColor = UIColor.white
+                    cell.contentView.layer.cornerRadius = 12 // Rounded corners
+                    cell.contentView.layer.masksToBounds = true
+                    
+                    // Add shadow for better appearance
+                    cell.layer.shadowColor = UIColor.black.cgColor
+                    cell.layer.shadowOpacity = 0.1
+                    cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+                    cell.layer.shadowRadius = 4
+                    cell.layer.masksToBounds = false
+                    
+            // Display the average in the DailyAverageCollectionViewCell
+            if let selectedIndex = glucoseDataSet.glucoseReadings.firstIndex(where: { $0.isSelected }) {
+                let reading = glucoseDataSet.glucoseReadings[selectedIndex]
+                var emoji:String;           if(reading.change>0) {
+                    emoji="⬆️"}
+                else { emoji="⬇️"}
+                cell.glucoseLabel?.text = "Blood Glucose Level "
+                cell.glucoseValueLabel?.text = "\(reading.averageReading)"
+                cell.glucoseChangeLabel?.text = "\(emoji)\(abs(reading.change))% change since last reading"
+                cell.glucoseLastUppdatedLbl?.text = "Updated at \(reading.lastUpdated)"
+                
+                // Update reaction based on glucose levels
+                if reading.averageReading > 180 {
+                    cell.glucoseReactionLbl?.image = UIImage(named: "badEmoji") // Example: High glucose emoji
+                } else if reading.averageReading <= 120 {
+                    cell.glucoseReactionLbl?.image = UIImage(named: "goodEmoji") // Example: Low glucose emoji
+                } else {
+                    cell.glucoseReactionLbl?.image = UIImage(named: "neutralEmoji") // Neutral emoji for normal levels
+                }
             } else {
-                cell.glucoseReactionLbl?.image = neutralEmoji
+                cell.glucoseLabel?.text = "No data available"
+                cell.glucoseChangeLabel?.text = ""
+                cell.glucoseLastUppdatedLbl?.text = ""
+                cell.glucoseReactionLbl?.image = UIImage(named: "neutralEmoji")
+                print("No data available for the selected date.")
             }
+//            cell.contentView.backgroundColor = UIColor.lightGray
             return cell
             
         case 2:
@@ -211,20 +257,21 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                     layoutSize: groupSize,
                     subitems: [item, item, item, item, item, item, item] // Seven items in one row
                 )
-                
+                group.interItemSpacing = NSCollectionLayoutSpacing.fixed(5)
                 // Define the section and set the group
                 section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = 0
                 
             case 1: // Daily Average Cell
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150))  // Adjust height as needed
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))  // Full width and 120 height
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150))  // Full width, fixed height for daily average cell
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = 10  // Adjust spacing between items in the group
+                section.contentInsets = NSDirectionalEdgeInsets(top: 50, leading: 5, bottom: 5, trailing: 5)
+                            
                 
             case 2: // Dietary Recommendations Cell
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150))  // Adjust height as needed
