@@ -39,11 +39,14 @@ class TrackingViewController: UIViewController {
         let newViewController: UIViewController
         switch index {
         case 0:
+            
             newViewController = storyboard?.instantiateViewController(withIdentifier: "bloodSugar") as! trackBloodSugarViewController
         case 1:
-            newViewController = storyboard?.instantiateViewController(withIdentifier: "meals") as! trackMealsViewController
+            let storyboard = UIStoryboard(name: "MealsPage", bundle: nil)
+            newViewController = storyboard.instantiateViewController(withIdentifier: "meals") as! trackMealsViewController
         case 2:
-            newViewController = storyboard?.instantiateViewController(withIdentifier: "tracking") as! trackActivityViewController
+            let storyboard = UIStoryboard(name: "ActivityTrackpg", bundle: nil)
+            newViewController = storyboard.instantiateViewController(withIdentifier: "tracking") as! trackActivityViewController
         default:
             return
         }
