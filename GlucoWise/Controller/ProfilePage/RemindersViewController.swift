@@ -56,10 +56,6 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
 
         let actionSheet = UIAlertController(title: "Reminder Options", message: "What would you like to do?", preferredStyle: .actionSheet)
 
-        actionSheet.addAction(UIAlertAction(title: "Edit", style: .default) { _ in
-            self.showEditReminderModal(for: selectedReminder, at: indexPath.row)
-        })
-
         actionSheet.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
             self.deleteReminder(at: indexPath.row)
         })
@@ -69,43 +65,11 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
         self.present(actionSheet, animated: true, completion: nil)
     }
 
-    func showEditReminderModal(for reminder: Reminder, at index: Int) {
-        let alertController = UIAlertController(title: "Edit Reminder", message: nil, preferredStyle: .alert)
-
-        alertController.addTextField { textField in
-            textField.text = reminder.title
+    // Implement swipe-to-delete functionality
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteReminder(at: indexPath.row)
         }
-
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .time
-        datePicker.preferredDatePickerStyle = .wheels
-
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .short
-        if let time = dateFormatter.date(from: reminder.time) {
-            datePicker.date = time
-        }
-
-        alertController.addTextField { textField in
-            textField.text = reminder.frequency
-        }
-
-        alertController.view.addSubview(datePicker)
-
-        let addAction = UIAlertAction(title: "Save", style: .default) { _ in
-            let updatedTitle = alertController.textFields?[0].text ?? reminder.title
-            let updatedFrequency = alertController.textFields?[1].text ?? reminder.frequency
-            let updatedTime = dateFormatter.string(from: datePicker.date)
-
-            self.reminders[index] = Reminder(title: updatedTitle, time: updatedTime, frequency: updatedFrequency)
-            self.remindersTableView.reloadData()
-        }
-
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertController.addAction(addAction)
-        alertController.addAction(cancelAction)
-
-        self.present(alertController, animated: true, completion: nil)
     }
 
     func deleteReminder(at index: Int) {
