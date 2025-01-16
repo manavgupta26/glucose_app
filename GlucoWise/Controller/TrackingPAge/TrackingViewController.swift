@@ -21,7 +21,7 @@ class TrackingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         switchToViewController(at: 0)
-        // Do any additional setup after loading the view.
+        
     }
     
     @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
@@ -39,14 +39,14 @@ class TrackingViewController: UIViewController {
         let newViewController: UIViewController
         switch index {
         case 0:
-            
-            newViewController = storyboard?.instantiateViewController(withIdentifier: "bloodSugar") as! trackBloodSugarViewController
+           
+            newViewController = storyboard?.instantiateViewController(withIdentifier: "bloodSugar") as! bloodGlucoseTrackkViewController
         case 1:
             let storyboard = UIStoryboard(name: "MealsPage", bundle: nil)
             newViewController = storyboard.instantiateViewController(withIdentifier: "meals") as! trackMealsViewController
         case 2:
-            let storyboard = UIStoryboard(name: "ActivityTrackpg", bundle: nil)
-            newViewController = storyboard.instantiateViewController(withIdentifier: "tracking") as! trackActivityViewController
+            
+            newViewController = storyboard?.instantiateViewController(withIdentifier: "tracking") as! TrackTrackingViewController
         default:
             return
         }

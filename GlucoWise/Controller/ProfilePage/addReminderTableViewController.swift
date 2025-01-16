@@ -17,23 +17,25 @@ class addReminderTableViewController: UITableViewController{
     @IBOutlet weak var repeatType: UIButton!
     
     
-        
-    @IBOutlet weak var reminderTimePicker: UIDatePicker!
+
     
     let option1 = UIAction(title: "Never", handler: { _ in
-                print("Option 1 selected")
+                
             })
-    let option2 = UIAction(title: "Weekdays", handler: { _ in
-        print("Option 2 selected")
+    let option2 = UIAction(title: "Everyday", handler: { _ in
+                
+            })
+    let option3 = UIAction(title: "Weekdays", handler: { _ in
+        
     })
-    let option3 = UIAction(title: "Weekends", handler: { _ in
-        print("Option 3 selected")
+    let option4 = UIAction(title: "Weekends", handler: { _ in
+        
     })
-let option4 = UIAction(title: "Monthly", handler: { _ in
-print("Option 2 selected")
+let option5 = UIAction(title: "Monthly", handler: { _ in
+
 })
-let option5 = UIAction(title: "Every 3 months", handler: { _ in
-print("Option 3 selected")
+let option6 = UIAction(title: "Every 3 months", handler: { _ in
+
 })
     
     

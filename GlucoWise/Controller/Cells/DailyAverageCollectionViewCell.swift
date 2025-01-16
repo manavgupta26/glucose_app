@@ -10,22 +10,12 @@ import UIKit
 class DailyAverageCollectionViewCell: UICollectionViewCell {
     
     
-    @IBOutlet var glucoseLabel: UILabel!
-    
-
-    @IBOutlet var glucoseValueLabel: UILabel!
-    
-    
-    @IBOutlet var glucoseChangeLabel: UILabel!
-    
-    
-    @IBOutlet var glucoseLastUppdatedLbl: UILabel!
-    
-    
-    
+   
     @IBOutlet var glucoseReactionLbl: UIImageView!
-    
-    
+    @IBOutlet var glucoseChangeLabel: UILabel!
+    @IBOutlet var glucoseLastUppdatedLbl: UILabel!
+    @IBOutlet var glucoseLabel: UILabel!
+    @IBOutlet var glucoseValueLabel: UILabel!
     override init(frame: CGRect) {
            super.init(frame: frame)
         contentView.backgroundColor = .white
@@ -110,5 +100,3 @@ class DailyAverageCollectionViewCell: UICollectionViewCell {
            ])
        }
 }
-
-

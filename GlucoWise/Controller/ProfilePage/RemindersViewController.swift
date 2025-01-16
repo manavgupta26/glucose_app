@@ -4,7 +4,7 @@ protocol AddReminderDelegate: AnyObject {
     func didAddReminder(_ reminder: RemindersViewController.Reminder)
 }
 
-class RemindersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class RemindersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
     struct Reminder {
         var title: String
         var time: String
@@ -16,7 +16,9 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
         Reminder(title: "Drink water reminder", time: "Every hour", frequency: "Every Hour")
     ]
 
+    
     @IBOutlet weak var remindersTableView: UITableView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +35,17 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
     @objc func addReminderButtonTapped() {
         let storyboard = UIStoryboard(name: "mainPage", bundle: nil) // Replace "Main" with your storyboard name
         guard let addReminderVC = storyboard.instantiateViewController(withIdentifier: "addReminderVC") as? addReminderTableViewController else { return }
+        addReminderVC.modalPresentationStyle = .popover
 
-        addReminderVC.delegate = self
-        navigationController?.pushViewController(addReminderVC, animated: true)
+      
+        if let popoverController = addReminderVC.popoverPresentationController {
+                popoverController.barButtonItem = navigationItem.rightBarButtonItem // Set the source to the right bar button item
+                popoverController.permittedArrowDirections = .any // Arrow direction can be adjusted as needed
+                popoverController.delegate = self // Optional: To handle popover delegate methods
+            }
+            
+            // Present the view controller
+            present(addReminderVC, animated: true, completion: nil)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -52,7 +62,7 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectedReminder = reminders[indexPath.row]
+        _ = reminders[indexPath.row]
 
         let actionSheet = UIAlertController(title: "Reminder Options", message: "What would you like to do?", preferredStyle: .actionSheet)
 
@@ -78,9 +88,4 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
     }
 }
 
-extension RemindersViewController: AddReminderDelegate {
-    func didAddReminder(_ reminder: Reminder) {
-        reminders.append(reminder)
-        remindersTableView.reloadData()
-    }
-}
+
