@@ -94,6 +94,7 @@ class profileViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.navigationController?.pushViewController(progressSummaryVC, animated: true)
             } else if indexPath.row == 1 {
                 // Navigate to "Health Goals" ViewController
+                
                 let healthGoalsVC = storyboard.instantiateViewController(withIdentifier: "HealthGoalsVC")
                 healthGoalsVC.title = "Health Goals" // Set the title for the next screen
                 self.navigationController?.pushViewController(healthGoalsVC, animated: true)
