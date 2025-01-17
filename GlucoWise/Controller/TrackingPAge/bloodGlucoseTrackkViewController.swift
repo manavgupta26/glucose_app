@@ -145,16 +145,16 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
 
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return readings.count
+        return bloodSugarReadings.count
        }
 
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
            let cell = tableView.dequeueReusableCell(withIdentifier: "ReadingCell", for: indexPath) as! bloodReadingsTableViewCell
-           let reading = readings[indexPath.row]
-           cell.titleLabel.text = reading.0
-           cell.timeLabel.text = "At \(reading.1)"
-           cell.readingLabel.text = reading.2
-           return cell
+               let reading = bloodSugarReadings[indexPath.row]
+               cell.titleLabel.text = reading.title
+               cell.timeLabel.text = "At \(reading.time)"
+               cell.readingLabel.text = reading.reading
+               return cell
        }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -174,35 +174,9 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChartCell", for: indexPath) as! ChartCell
             
             // Define titles for each graph
-            let titles = ["Today", "Week", "Month"]
-        let dataEntries: [[ChartDataEntry]] = [
-                [
-                    ChartDataEntry(x: 1, y: 85),
-                    ChartDataEntry(x: 2, y: 90),
-                    ChartDataEntry(x: 3, y: 120),
-                    ChartDataEntry(x: 4, y: 110),
-                    ChartDataEntry(x: 5, y: 105)
-                ],
-                [
-                    ChartDataEntry(x: 0, y: 88),
-                    ChartDataEntry(x: 2, y: 92),
-                    ChartDataEntry(x: 3, y: 110),
-                    ChartDataEntry(x: 4, y: 115),
-                    ChartDataEntry(x: 5, y: 118),
-                    ChartDataEntry(x: 6, y: 120),
-                    ChartDataEntry(x: 7, y: 125)
-                ],
-                [
-                    ChartDataEntry(x: 1, y: 87),
-                    ChartDataEntry(x: 2, y: 95),
-                    ChartDataEntry(x: 3, y: 115),
-                    ChartDataEntry(x: 4, y: 110),
-                    ChartDataEntry(x: 5, y: 120)
-                ]
-            ]
-            
-            let title = titles[indexPath.item]
-            let data = dataEntries[indexPath.item]
+        let bloodSugarReading = bloodSugarReadings[indexPath.item]
+            let data = bloodSugarReading.chartData
+            let title = bloodSugarReading.title
             cell.configure(with: title, data: data)
             
             return cell
