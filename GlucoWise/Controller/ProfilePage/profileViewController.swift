@@ -78,12 +78,14 @@ class profileViewController: UIViewController, UITableViewDataSource, UITableVie
                 let changePasswordVC = storyboard.instantiateViewController(withIdentifier: "ChangePasswordTVC")
                 changePasswordVC.title = "Change Password" // Set the title for the next screen
                 changePasswordVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.navigationBar.prefersLargeTitles = false
                 self.navigationController?.pushViewController(changePasswordVC, animated: true)
             } else if indexPath.row == 1 {
                 // Navigate to "Notification Preferences" ViewController
                 let notificationPreferenceVC = storyboard.instantiateViewController(withIdentifier: "NotificationPreferencesViewController") as! NotificationPreferencesTableViewController
                 notificationPreferenceVC.title = "Notification Preferences" // Set the title for the next screen
                 notificationPreferenceVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.navigationBar.prefersLargeTitles = false
                 self.navigationController?.pushViewController(notificationPreferenceVC, animated: true)
             }
         } else if indexPath.section == 1 {
@@ -91,17 +93,20 @@ class profileViewController: UIViewController, UITableViewDataSource, UITableVie
                 // Navigate to "Progress Summary" ViewController
                 let progressSummaryVC = storyboard.instantiateViewController(withIdentifier: "ProgressSummaryVC")
                 progressSummaryVC.title = "Progress Summary" // Set the title for the next screen
+                self.navigationController?.navigationBar.prefersLargeTitles = false
                 self.navigationController?.pushViewController(progressSummaryVC, animated: true)
             } else if indexPath.row == 1 {
                 // Navigate to "Health Goals" ViewController
                 
                 let healthGoalsVC = storyboard.instantiateViewController(withIdentifier: "HealthGoalsVC")
                 healthGoalsVC.title = "Health Goals" // Set the title for the next screen
+                self.navigationController?.navigationBar.prefersLargeTitles = false
                 self.navigationController?.pushViewController(healthGoalsVC, animated: true)
             } else if indexPath.row == 2 {
                 // Navigate to "Reminders" ViewController
                 let remindersVC = storyboard.instantiateViewController(withIdentifier: "ReminderVC")
                 remindersVC.title = "Reminders" // Set the title for the next screen
+                self.navigationController?.navigationBar.prefersLargeTitles = false
                 self.navigationController?.pushViewController(remindersVC, animated: true)
             }
         }

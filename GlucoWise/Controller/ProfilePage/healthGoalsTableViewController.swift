@@ -32,6 +32,7 @@ class healthGoalsTableViewController: UITableViewController, UIPickerViewDelegat
     // MARK: - Table view delegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         selectedIndexPath = indexPath
         showPicker(for: indexPath)
     }
