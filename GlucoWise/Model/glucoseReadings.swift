@@ -15,7 +15,7 @@ struct GlucoseReading {
     var change: Double
     var lastUpdated: String   // Timestamp of the last update (in "MM/DD/YYYY HH:mm" format)
     var isSelected: Bool      // Indicates if this reading is currently selected
- // Timestamp of the last update (in "MM/DD/YYYY HH:mm" format)
+ 
 }
 class GlucoseDataSet {
     
