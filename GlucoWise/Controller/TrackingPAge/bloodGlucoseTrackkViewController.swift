@@ -81,7 +81,7 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
            
            // Add the button to the headerView
            headerView.addSubview(addButton)
-
+        addButton.addTarget(self, action: #selector(addReadingButtonTapped), for: .touchUpInside)
            tableView = UITableView()
            tableView.dataSource = self
            tableView.delegate = self
@@ -160,9 +160,33 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
         tableView.deselectRow(at: indexPath, animated: true)
     }
     @objc func addReadingButtonTapped() {
-        print("Add Reading button tapped")
-        // Implement logic for adding a reading here
+        let storyboard = UIStoryboard(name: "mainPage", bundle: nil)
+        if let vc2 = storyboard.instantiateViewController(withIdentifier: "addBloodReading") as? addBloodReadingTableViewController{
+            vc2.title = "Add Reading"
+                
+                // Add a cancel button
+                let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissVC))
+                vc2.navigationItem.leftBarButtonItem = cancelButton
+
+                // Check if vc2 is already embedded in a navigation controller
+                if vc2.navigationController == nil {
+                    // Embed vc2 in a navigation controller
+                    let navigationController = UINavigationController(rootViewController: vc2)
+                    navigationController.modalPresentationStyle = .popover
+
+                    // Present the navigation controller
+                    self.present(navigationController, animated: true, completion: nil)
+                } else {
+                    // If already embedded, just present vc2
+                    vc2.modalPresentationStyle = .popover
+                    self.present(vc2, animated: true, completion: nil)
+                }
+        }
     }
+    @objc func dismissVC() {
+        self.dismiss(animated: true, completion: nil)
+    }
+
 
     // MARK: - UICollectionView DataSource
 
