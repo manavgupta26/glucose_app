@@ -63,30 +63,6 @@
             </objects>
             <point key="canvasLocation" x="3417.5572519083967" y="-227.46478873239437"/>
         </scene>
-        <!--Track Meals View Controller-->
-        <scene sceneID="AZ8-Zi-gOX">
-            <objects>
-                <viewController storyboardIdentifier="meals" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UlO-0b-Jay" customClass="trackMealsViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="XEt-E0-wgh">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Meals page" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0es-6g-VkQ">
-                                <rect key="frame" x="151" y="405" width="91" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="85h-iQ-wWJ"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Sxu-a9-91k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5062" y="-227"/>
-        </scene>
         <!--Add Reading-->
         <scene sceneID="hZI-BY-5GD">
             <objects>
@@ -96,7 +72,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="Section-1" id="XPu-3S-cwk">
+                            <tableViewSection headerTitle="Add Reading" id="XPu-3S-cwk">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="qec-SY-Yq7">
                                         <rect key="frame" x="0.0" y="55.333332061767578" width="393" height="43.666667938232422"/>
@@ -149,16 +125,17 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAm-hq-Sq4">
-                                                    <rect key="frame" x="327" y="7" width="46" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVZ-Ff-o65">
+                                                    <rect key="frame" x="201" y="7" width="172" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <menu key="menu" id="RfG-O3-5ix">
+                                                    <menu key="menu" id="MWj-3t-CSw">
                                                         <children>
-                                                            <command title="Item 1" id="hof-BX-lZb"/>
-                                                            <command title="Item 2" id="EuQ-gQ-qsM"/>
+                                                            <command title="Item 1" id="aIM-Y6-08o"/>
+                                                            <command title="Item 2" id="P0j-LF-tW8"/>
                                                         </children>
                                                     </menu>
                                                     <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -185,7 +162,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Add Reading" id="mTQ-ab-oXY"/>
                     <connections>
-                        <outlet property="tagOptions" destination="OAm-hq-Sq4" id="VDH-Y6-2Jf"/>
+                        <outlet property="tagOptions" destination="IVZ-Ff-o65" id="ilL-Vg-qEw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GOO-sH-fwL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -445,7 +422,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKN-dX-7CF">
-                                            <rect key="frame" x="72" y="53.666666666666664" width="41.333333333333343" height="20.666666666666664"/>
+                                            <rect key="frame" x="70" y="53.666666666666664" width="41.333333333333343" height="20.666666666666664"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -479,7 +456,7 @@
                                             <rect key="frame" x="104" y="90" width="48" height="4"/>
                                         </progressView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="4K9-mq-BR8">
-                                            <rect key="frame" x="31.333333333333336" y="87" width="103.66666666666666" height="34.333333333333343"/>
+                                            <rect key="frame" x="27" y="87" width="108" height="34.333333333333343"/>
                                             <color key="backgroundColor" red="0.49703639150000001" green="0.2417515231" blue="0.5" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="tintColor" red="0.40734243710000001" green="0.66912156339999995" blue="0.6180152498" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -488,14 +465,14 @@
                                                 <attributedString key="attributedTitle">
                                                     <fragment content="View Recipie">
                                                         <attributes>
-                                                            <font key="NSFont" size="10" name="SFProDisplay-Semibold"/>
+                                                            <font key="NSFont" metaFont="system" size="10"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
                                                     <fragment content="  ">
                                                         <attributes>
                                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" size="10" name="SFProDisplay-Semibold"/>
+                                                            <font key="NSFont" metaFont="system" size="10"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
@@ -586,7 +563,7 @@
                                                 <attributedString key="attributedTitle">
                                                     <fragment content="Log Activity">
                                                         <attributes>
-                                                            <font key="NSFont" size="10" name="SFProDisplay-Semibold"/>
+                                                            <font key="NSFont" metaFont="system" size="10"/>
                                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
@@ -1009,7 +986,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xWy-VY-Bhs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4236" y="-227"/>
+            <point key="canvasLocation" x="4193" y="-227"/>
         </scene>
         <!--Change Password Table View Controller-->
         <scene sceneID="Sif-FO-Lab">
@@ -1134,6 +1111,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bv1-aa-mjD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5853" y="-227"/>
+        </scene>
+        <!--Track Meals View Controller-->
+        <scene sceneID="HLa-s7-kAW">
+            <objects>
+                <viewController storyboardIdentifier="meals" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dVe-VH-ZJY" customClass="trackMealsViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xmM-Do-JOo">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ZyN-LG-okZ"/>
+                        <color key="backgroundColor" red="0.94901967050000002" green="0.94901967050000002" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sJv-Lt-DzU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5007" y="-227"/>
         </scene>
     </scenes>
     <resources>

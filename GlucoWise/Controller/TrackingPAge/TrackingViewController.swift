@@ -42,8 +42,8 @@ class TrackingViewController: UIViewController {
            
             newViewController = storyboard?.instantiateViewController(withIdentifier: "bloodSugar") as! bloodGlucoseTrackkViewController
         case 1:
-            let storyboard = UIStoryboard(name: "MealsPage", bundle: nil)
-            newViewController = storyboard.instantiateViewController(withIdentifier: "meals") as! trackMealsViewController
+            
+            newViewController = storyboard?.instantiateViewController(withIdentifier: "meals") as! trackMealsViewController
         case 2:
             
             newViewController = storyboard?.instantiateViewController(withIdentifier: "tracking") as! TrackTrackingViewController
