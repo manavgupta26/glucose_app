@@ -2,24 +2,49 @@ import UIKit
 import DGCharts
 import Charts
 
-class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
-    let readings = [
-        ("Post Meal", "10:00 PM", "120 mg/dL"),
-        ("Pre Meal", "4:00 PM", "90 mg/dL"),
-        ("Fasting", "7:00 AM", "85 mg/dL"),
-        ("Post Meal", "10:00 PM", "120 mg/dL"),
-        ("Pre Meal", "4:00 PM", "90 mg/dL"),
-        ("Fasting", "7:00 AM", "85 mg/dL")
+class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, addReadingdelegate{
+    var bloodSugarReadings = [
+        BloodSugarReading(title: "Post Meal", time: "10:00 PM", reading: "120 mg/dL", chartData: [
+            ChartDataEntry(x: 1, y: 120), ChartDataEntry(x: 2, y: 110), ChartDataEntry(x: 3, y: 115)
+        ]),
+        BloodSugarReading(title: "Pre Meal", time: "4:00 PM", reading: "90 mg/dL", chartData: [
+            ChartDataEntry(x: 1, y: 90), ChartDataEntry(x: 2, y: 85), ChartDataEntry(x: 3, y: 95)
+        ]),
+        BloodSugarReading(title: "Fasting", time: "7:00 AM", reading: "85 mg/dL", chartData: [
+            ChartDataEntry(x: 1, y: 85), ChartDataEntry(x: 2, y: 87), ChartDataEntry(x: 3, y: 88)
+        ]),
+        BloodSugarReading(title: "Post Meal", time: "8:00 AM", reading: "145 mg/dL", chartData: [ChartDataEntry(x: 3, y: 140),ChartDataEntry(x: 3, y: 140),ChartDataEntry(x: 3, y: 140)])
     ]
+
+
+    func didAddReading(reading: String, time: String, type: String) {
+        print("hi")
+        let newChartData = [
+               ChartDataEntry(x: 1, y: Double(reading) ?? 0),
+               ChartDataEntry(x: 2, y: Double(reading) ?? 0),
+               ChartDataEntry(x: 3, y: Double(reading) ?? 0)
+           ]
+           
+           // Create a new BloodSugarReading object
+        let newReading = BloodSugarReading(title: type, time: time, reading: "\(reading) mg/dL", chartData: newChartData)
+           
+           // Append the new BloodSugarReading object to the array
+           bloodSugarReadings.append(newReading)
+        tableViewHeightConstraint?.constant = CGFloat(bloodSugarReadings.count * 60)
+           // Reload the table view to display the new reading
+        print(bloodSugarReadings)
+        self.tableView.reloadData()
+    }
     var collectionView: UICollectionView!
     var pageControl: UIPageControl!
     var tableView: UITableView!
     var scrollView: UIScrollView!
     var contentView: UIView!
-
+    var tableViewHeightConstraint : NSLayoutConstraint?
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.viewDidLoad()
+        
+        
             view.backgroundColor = .white
             
             // MARK: - ScrollView Setup
@@ -92,7 +117,7 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
            contentView.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
-
+        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(bloodSugarReadings.count * 80))
            // MARK: - Constraints
            NSLayoutConstraint.activate([
                // ScrollView
@@ -135,10 +160,11 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
                addButton.heightAnchor.constraint(equalToConstant: 35),
 
                // Table View
+               
                tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 10),
                tableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
                tableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-               tableView.heightAnchor.constraint(equalToConstant: CGFloat(readings.count * 50)),
+               tableViewHeightConstraint!,
                tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
            ])
        
@@ -159,11 +185,23 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Perform deletion from your data source
+            bloodSugarReadings.remove(at: indexPath.row)
+            
+            // Delete the row from the table view with animation
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
     @objc func addReadingButtonTapped() {
         let storyboard = UIStoryboard(name: "mainPage", bundle: nil)
         if let vc2 = storyboard.instantiateViewController(withIdentifier: "addBloodReading") as? addBloodReadingTableViewController{
             vc2.title = "Add Reading"
-                
+            vc2.delegate = self
                 // Add a cancel button
                 let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissVC))
                 vc2.navigationItem.leftBarButtonItem = cancelButton

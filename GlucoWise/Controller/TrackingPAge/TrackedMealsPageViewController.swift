@@ -1,75 +1,122 @@
 import UIKit
 
 class TrackedMealsPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    let tableView = UITableView(frame: .zero, style: .insetGrouped)
+    var setTitle : String?
+    let tableView = UITableView(frame: .zero, style: .grouped)
     var trackedFoods = ["Allu Paratha", "Curd, Amul"]
     let macronutrients = [("Carbs", 0.9), ("Protein", 0.7), ("Fats", 0.5), ("Fiber", 0.8)]
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = setTitle
         setupTableView()
-        setupGlycemicIndicators() // Setup Glycemic Indicators
+       // Setup Glycemic Indicators
     }
+    
 
     private func setupTableView() {
-        view.addSubview(tableView)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-    }
+           view.addSubview(tableView)
+           tableView.delegate = self
+           tableView.dataSource = self
+           tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+           tableView.register(GlycemicIndicatorCell.self, forCellReuseIdentifier: "glycemicCell")
+           tableView.translatesAutoresizingMaskIntoConstraints = false
 
+           NSLayoutConstraint.activate([
+               tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+               tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+               tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+               tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+           ])
+       }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return trackedFoods.count
-        } else {
-            return macronutrients.count
-        }
-    }
+           switch section {
+           case 0:
+               return trackedFoods.count
+           case 1:
+               return 1// Glycemic Index and Glycemic Load
+           case 2:
+               return macronutrients.count
+           default:
+               return 0
+           }
+       }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        if indexPath.section == 0 {
-            cell.textLabel?.text = trackedFoods[indexPath.row]
-            cell.accessoryType = .disclosureIndicator
-        } else {
-            let nutrient = macronutrients[indexPath.row]
-            cell.textLabel?.text = nutrient.0
-
-            let progressView = UIProgressView(progressViewStyle: .default)
-            progressView.progress = Float(nutrient.1)
-            progressView.tintColor = .systemGreen
-            progressView.translatesAutoresizingMaskIntoConstraints = false
-            cell.contentView.addSubview(progressView)
-
-            NSLayoutConstraint.activate([
-                progressView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-                progressView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
-                progressView.widthAnchor.constraint(equalToConstant: 100)
-            ])
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            
+            switch indexPath.section {
+            case 0: // Tracked Foods
+                cell.textLabel?.text = trackedFoods[indexPath.row]
+                cell.accessoryType = .disclosureIndicator
+                
+            case 1: // Glycemic Indicators
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "glycemicCell", for: indexPath) as? GlycemicIndicatorCell else {
+                                return UITableViewCell()
+                            }
+                            cell.configure(glycemicIndex: 0.45, glycemicLoad: 0.28, indexValue: 45, loadValue: 28)
+                            return cell
+                
+            case 2: // Macronutrients
+                let nutrient = macronutrients[indexPath.row]
+                   cell.textLabel?.text = nutrient.0
+                   
+                   let progressView = UIProgressView(progressViewStyle: .default)
+                   progressView.progress = Float(nutrient.1)
+                progressView.tintColor = UIColor(hex: "#6CAB9C")
+                   progressView.translatesAutoresizingMaskIntoConstraints = false
+                   
+                   // Label for the macronutrient values
+                   let valueLabel = UILabel()
+                   valueLabel.text = "\(Int(nutrient.1 * 20))/20g" // Assuming a total value of 20g for demonstration
+                   valueLabel.font = UIFont.systemFont(ofSize: 14)
+                valueLabel.textColor = .systemGray
+                valueLabel.font = UIFont.systemFont(ofSize: 12)
+                   valueLabel.translatesAutoresizingMaskIntoConstraints = false
+                   
+                   // Clear old subviews to prevent overlap
+                   for subview in cell.contentView.subviews {
+                       subview.removeFromSuperview()
+                   }
+                   
+                   // Add the progress view and the label to the cell content view
+                   cell.contentView.addSubview(progressView)
+                   cell.contentView.addSubview(valueLabel)
+                   
+                   // Constraints for progressView and valueLabel
+                   NSLayoutConstraint.activate([
+                       progressView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
+                       progressView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                       progressView.widthAnchor.constraint(equalToConstant: 100),
+                       
+                       valueLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor),
+                       valueLabel.trailingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: -8) // Place the label to the left of the progress bar
+                   ])
+                
+            default:
+                break
+            }
+            return cell
         }
-        return cell
-    }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Tracked Food"
-        } else {
-            return "Macronutrients Breakdown"
-        }
-    }
+         switch section {
+         case 0:
+             return "Tracked Food"
+         case 1:
+             return "Glycemic Indicators"
+         case 2:
+             return "Macronutrients Breakdown"
+         default:
+             return nil
+         }
+     }
+ 
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -141,90 +188,96 @@ class TrackedMealsPageViewController: UIViewController, UITableViewDelegate, UIT
 
         present(alertController, animated: true, completion: nil)
     }
+ 
 
-    // Setup Glycemic Indicators
-    private func setupGlycemicIndicators() {
-        // Section Heading
-        let sectionLabel = UILabel()
-        sectionLabel.text = "Glycemic Indicators"
-        sectionLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        sectionLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(sectionLabel)
+}
+class GlycemicIndicatorCell: UITableViewCell {
+    private let glycemicIndexView = UIView()
+    private let glycemicLoadView = UIView()
 
-        // Glycemic Index Progress View
-        let glycemicIndexView = createCircularProgressView(progress: 0.45, title: "Glycemic Index", value: 45)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupViews() {
         glycemicIndexView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(glycemicIndexView)
-
-        // Glycemic Load Progress View
-        let glycemicLoadView = createCircularProgressView(progress: 0.28, title: "Glycemic Load", value: 28)
         glycemicLoadView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(glycemicLoadView)
+
+        contentView.addSubview(glycemicIndexView)
+        contentView.addSubview(glycemicLoadView)
 
         NSLayoutConstraint.activate([
-            sectionLabel.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 16),
-            sectionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-
-            glycemicIndexView.topAnchor.constraint(equalTo: sectionLabel.bottomAnchor, constant: 16),
-            glycemicIndexView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            glycemicIndexView.widthAnchor.constraint(equalToConstant: 100),
+            glycemicIndexView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            glycemicIndexView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            glycemicIndexView.widthAnchor.constraint(equalToConstant: 120),
             glycemicIndexView.heightAnchor.constraint(equalToConstant: 120),
-
-            glycemicLoadView.topAnchor.constraint(equalTo: sectionLabel.bottomAnchor, constant: 16),
-            glycemicLoadView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            glycemicLoadView.widthAnchor.constraint(equalToConstant: 100),
+            
+            glycemicLoadView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            glycemicLoadView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            glycemicLoadView.widthAnchor.constraint(equalToConstant: 120),
             glycemicLoadView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }
 
-    // Create Circular Progress View
-    private func createCircularProgressView(progress: CGFloat, title: String, value: Int) -> UIView {
-        let container = UIView()
+    func configure(glycemicIndex: CGFloat, glycemicLoad: CGFloat, indexValue: Int, loadValue: Int) {
+        setupCircularProgress(view: glycemicIndexView, progress: glycemicIndex, title: "Glycemic Index", value: indexValue)
+        setupCircularProgress(view: glycemicLoadView, progress: glycemicLoad, title: "Glycemic Load", value: loadValue)
+    }
+
+    private func setupCircularProgress(view: UIView, progress: CGFloat, title: String, value: Int) {
+        view.subviews.forEach { $0.removeFromSuperview() } // Clear previous subviews
 
         let circleLayer = CAShapeLayer()
         let progressLayer = CAShapeLayer()
 
-        let center = CGPoint(x: 50, y: 50)
-        let radius: CGFloat = 40
+        let center = CGPoint(x: 60, y: 60)
+        let radius: CGFloat = 50
         let circularPath = UIBezierPath(arcCenter: center, radius: radius, startAngle: -.pi / 2, endAngle: 1.5 * .pi, clockwise: true)
 
+        // Background circle
         circleLayer.path = circularPath.cgPath
         circleLayer.fillColor = UIColor.clear.cgColor
-        circleLayer.strokeColor = UIColor.lightGray.cgColor
-        circleLayer.lineWidth = 8
-        container.layer.addSublayer(circleLayer)
+        circleLayer.strokeColor = UIColor(hex: "#EAEDEC").cgColor
+        circleLayer.lineWidth = 7
+        view.layer.addSublayer(circleLayer)
 
+        // Progress circle
         progressLayer.path = circularPath.cgPath
         progressLayer.fillColor = UIColor.clear.cgColor
-        progressLayer.strokeColor = UIColor.systemGreen.cgColor
-        progressLayer.lineWidth = 8
+        progressLayer.strokeColor = UIColor(hex: "#6CAB9C").cgColor
+        progressLayer.lineWidth = 7
         progressLayer.strokeEnd = progress
-        container.layer.addSublayer(progressLayer)
+        view.layer.addSublayer(progressLayer)
 
+        // Value label
         let valueLabel = UILabel()
         valueLabel.text = "\(value)"
         valueLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        valueLabel.textColor = .systemGreen
+        valueLabel.textColor = .systemGray
+        valueLabel.textAlignment = .center
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(valueLabel)
+        view.addSubview(valueLabel)
 
-        NSLayoutConstraint.activate([
-            valueLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            valueLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor)
-        ])
-
+        // Title label
         let titleLabel = UILabel()
         titleLabel.text = title
-        titleLabel.font = UIFont.systemFont(ofSize: 14)
+        titleLabel.font = UIFont.systemFont(ofSize: 11)
         titleLabel.textAlignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(titleLabel)
+        view.addSubview(titleLabel)
 
+        // Add constraints for labels
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: container.bottomAnchor, constant: -16),
-            titleLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor)
+            valueLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            valueLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -10),
+            titleLabel.topAnchor.constraint(equalTo: valueLabel.bottomAnchor, constant: 4),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-
-        return container
     }
 }
+
