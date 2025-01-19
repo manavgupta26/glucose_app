@@ -4,7 +4,7 @@ class trackMealsViewController: UIViewController, UITableViewDataSource, UITable
 
     private var selectedButton: UIButton?
     private var tableView: UITableView!
-
+    let meals = ["Breakfast", "Lunch", "Snacks", "Dinner"]
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCalendarView()
@@ -165,13 +165,28 @@ class trackMealsViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     @objc func addMealButtonTapped() {
-        // Handle the Add Meal button tap
-        print("Add Meal button tapped")
+        let storyboard = UIStoryboard(name: "AddMeal", bundle: nil)
+        if let vc = storyboard.instantiateViewController(withIdentifier: "search") as? AddMealViewController{
+            vc.title = "Search Food"
+            if vc.navigationController == nil {
+                // Embed vc2 in a navigation controller
+                let navigationController = UINavigationController(rootViewController: vc)
+                navigationController.modalPresentationStyle = .popover
+
+                // Present the navigation controller
+                self.present(navigationController, animated: true, completion: nil)
+            } else {
+                // If already embedded, just present vc2
+                vc.modalPresentationStyle = .popover
+                self.present(vc, animated: true, completion: nil)
+            }
+            
+        }
     }
 
     // MARK: - Table View Setup
     func setupTableView() {
-        tableView = UITableView(frame: .zero, style: .insetGrouped)
+        tableView = UITableView(frame: .zero, style: .grouped)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -203,7 +218,7 @@ class trackMealsViewController: UIViewController, UITableViewDataSource, UITable
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MealCell") ?? UITableViewCell(style: .default, reuseIdentifier: "MealCell")
             
-            let meals = ["Breakfast", "Lunch", "Snacks", "Dinner"]
+            
             cell.textLabel?.text = meals[indexPath.row]
             
             // Add disclosure indicator to each cell
@@ -251,6 +266,7 @@ class trackMealsViewController: UIViewController, UITableViewDataSource, UITable
         tableView.deselectRow(at: indexPath, animated: true)
         let storyboard = UIStoryboard(name: "TrackedMealsPage", bundle: nil)
         if let vc2 = storyboard.instantiateViewController(withIdentifier: "TrackedMealsVC") as? TrackedMealsPageViewController{
+            vc2.setTitle = meals[indexPath.row]
             self.navigationController?.pushViewController(vc2, animated: true)
         }
         

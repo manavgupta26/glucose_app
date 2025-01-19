@@ -7,8 +7,24 @@
 
 import UIKit
 
+protocol addReadingdelegate : AnyObject{
+    func didAddReading(reading : String,time : String,type : String)
+}
+
 class addBloodReadingTableViewController: UITableViewController {
   
+    weak var delegate : addReadingdelegate?
+    
+    
+    @IBOutlet weak var dateField: UIDatePicker!
+    
+    
+    @IBOutlet weak var readingField: UITextField!
+    
+    
+    @IBOutlet weak var mealTag: UIButton!
+    
+    
     
     @IBOutlet weak var tagOptions: UIButton!
     
@@ -16,6 +32,7 @@ class addBloodReadingTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelBtnTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneTapped))
         navigationItem.title = "Add Reading"
               // Configure menu options with handlers to update the button title
         let option1 = UIAction(title: "Fasting", handler: { [weak self] _ in
@@ -42,5 +59,16 @@ class addBloodReadingTableViewController: UITableViewController {
     }
     @objc func cancelBtnTapped(){
         dismiss(animated: true,completion: nil)
+    }
+    @objc func doneTapped(){
+        let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "hh:mm a"
+        guard let readings = readingField.text, !readings.isEmpty, let mealType = tagOptions.titleLabel?.text else {
+            return
+        }
+        let time = timeFormatter.string(from: dateField.date)
+        delegate?.didAddReading(reading: readings, time: time, type: mealType)
+        dismiss(animated: true)
+       
     }
 }
