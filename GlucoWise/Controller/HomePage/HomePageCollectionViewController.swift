@@ -1,5 +1,5 @@
 import UIKit
-let glucoseDataSet = GlucoseDataSet()
+var glucoseDataSet = GlucoseDataSet.shared.getAllData()
 let lastMealDataSet = LastMealDataSet()
 let recommendedMealDataSet = RecommendedMealDataSet()
 let headerHeight: CGFloat = 100
@@ -12,9 +12,8 @@ let glucoseD = ["Normal", "High", "Low"]
     
     let stepsD = ["Walking", "Running", "Cycling"]
     let stepsValues = [40.0, 40.0, 20.0]
-    
 class HomePageCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, DailyAverageCollectionViewCellDelegate, DailyRecommendationsCollectionViewCellDelegate, TipsCollectionViewCellDelegate {
-    var selectedtip: Tip = tipsData[0]
+    var selectedtip: Tip = Tips.shared.tip(at: 0)
     
     let sectionNames = ["Calendar", "Daily Average", "Dietary Recommendations", "Tips", "Graph Insights"]
     
@@ -32,18 +31,12 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     let neutralEmoji = UIImage(named: "neutralEmoji")
     let badEmoji = UIImage(named: "badEmoji")
     
-    @IBOutlet var collectionView: UICollectionView!
     
+    @IBOutlet var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Home Page"
-        
-        
-        // Set welcome text
-        //        welcomeLabel.text = "Welcome, Sarah"
-        
-        // Set up the collection view delegate and data source
         collectionView.backgroundColor =  UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
         print("Glucose Levels: \(glucoseLevels)")
         collectionView.register(TipsCollectionHeaderViewCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "TipsCollectionHeaderView")
@@ -56,10 +49,6 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        
-        // Set horizontal scrolling specifically for the Calendar and Tips sections
-        
         collectionView.collectionViewLayout = createCompositionalLayout()
         
     }
@@ -72,10 +61,10 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count: Int
         switch section {
-        case 0: count = glucoseDataSet.glucoseReadings.count
+        case 0: count = GlucoseDataSet.shared.getDataCount()
         case 1: count = 1
         case 2: count = 1
-        case 3: count = tipsData.count
+        case 3: count = Tips.shared.numberOfTips()
         case 4: count = 1
         default: count = 0
         }
@@ -88,18 +77,18 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         case 0:
             
             // Deselect all readings
-            for i in 0..<glucoseDataSet.glucoseReadings.count {
-                glucoseDataSet.glucoseReadings[i].isSelected = false
+            for i in 0..<GlucoseDataSet.shared.getDataCount() {
+                glucoseDataSet[i].isSelected = false
             }
             
             // Mark the selected reading
-            glucoseDataSet.glucoseReadings[indexPath.item].isSelected = true
+            glucoseDataSet[indexPath.item].isSelected = true
             
             // Reload the collection view to reflect changes
             
             
             // Fetch and display additional details for the selected date
-            let selectedReading = glucoseDataSet.glucoseReadings[indexPath.item]
+            let selectedReading = glucoseDataSet[indexPath.item]
             selectedIndex=indexPath.item
             collectionView.reloadData()
             print("Selected Reading: \(selectedReading)")
@@ -118,12 +107,12 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
         case 3:
             // Handle Tip Selection
-            guard indexPath.item < tipsData.count else {
+            guard indexPath.item < Tips.shared.numberOfTips() else {
                 print("Invalid index for tipsData")
                 return
             }
             
-            let selectedTip = tipsData[indexPath.item]
+            let selectedTip =  Tips.shared.tip(at: indexPath.item)
             selectedtip = selectedTip
             
             
@@ -148,7 +137,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             
             // First cell: Date and day selection
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalenderCell", for: indexPath) as! CalenderCollectionViewCell
-            let reading = glucoseDataSet.glucoseReadings[indexPath.item]
+            let reading = glucoseDataSet[indexPath.item]
             // Extract the date components
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/yyyy"
@@ -195,8 +184,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             cell.layer.masksToBounds = false
             
             // Display the average in the DailyAverageCollectionViewCell
-            if let selectedIndex = glucoseDataSet.glucoseReadings.firstIndex(where: { $0.isSelected }) {
-                let reading = glucoseDataSet.glucoseReadings[selectedIndex]
+            if let selectedIndex = glucoseDataSet.firstIndex(where: { $0.isSelected }) {
+                let reading = glucoseDataSet[selectedIndex]
                 var emoji:String;           if(reading.change>0) {
                     emoji="⬆️"}
                 else { emoji="⬇️"}
@@ -263,7 +252,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipsCell", for: indexPath) as! TipsCollectionViewCell
             
             
-            let tip = tipsData[indexPath.item]
+            let tip = Tips.shared.tip(at: indexPath.item)
             
             // Assuming tipsData is an array with the tip data
             let glucoseLevel = glucoseLevels[indexPath.item]// Replace this with the actual glucose level from your data
@@ -291,7 +280,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         case 4:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GraphInsightsCell", for: indexPath) as! GraphsInsightsCollectionViewCell
             
-            cell.configure(dataset: exampleDataset)
+            cell.configure(dataset: GraphData.shared.getExampleDataset())
             
             return cell
             
@@ -471,3 +460,4 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         }
     }
 }
+

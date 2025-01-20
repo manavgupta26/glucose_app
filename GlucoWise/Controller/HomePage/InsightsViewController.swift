@@ -2,42 +2,12 @@ import UIKit
 import DGCharts
 class InsightsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let scrollView = UIScrollView()
-    let contentView = UIView()
+       let contentView = UIView()
     let detailedSummaryLabel = UILabel()
     let chartView = LineChartView()
-    var selectedReadingIndex: Int? // Store the index of the selected reading
-    let glucoseDataSet = GlucoseDataSet() // Initialize dataset
-    let readingsTableView = UITableView(frame: .zero, style: .grouped)
-    let cardView = UIView()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.addSubview(scrollView)
-        
-        scrollView.addSubview(contentView)
-        setupScrollView()
-        // Set up the view's background
-        view.backgroundColor = UIColor.systemGray6
-        
-        readingsTableView.register(GlucoseReadingCell.self, forCellReuseIdentifier: "GlucoseReadingCell")
-
-
-        // Fetch the selected glucose reading using the selected ind
-        
-        if let selectedReadingIndex = selectedReadingIndex,
-           selectedReadingIndex >= 0, selectedReadingIndex < glucoseDataSet.glucoseReadings.count {
-            let selectedReading = glucoseDataSet.glucoseReadings[selectedReadingIndex]
-            setupAverageBloodGlucoseView(using: selectedReading)
-            setupGraphView(using: selectedReading) // Add this line
-            setupReadingsTableView()
-            
-        } else {
-            print("Invalid or no selected reading index found!")
-        }
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             guard let selectedReadingIndex = selectedReadingIndex else { return 0 }
-            return glucoseDataSet.glucoseReadings[selectedReadingIndex].readingsByMeal.count
+            return glucoseDataSet[selectedReadingIndex].readingsByMeal.count
         }
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -47,10 +17,10 @@ class InsightsViewController: UIViewController, UITableViewDelegate, UITableView
             
             // Fetch the reading data
             guard let selectedReadingIndex = selectedReadingIndex else { return cell }
-            let keys = Array(glucoseDataSet.glucoseReadings[selectedReadingIndex].readingsByMeal.keys)
+            let keys = Array(glucoseDataSet[selectedReadingIndex].readingsByMeal.keys)
             let key = keys[indexPath.row]
             
-            if let dailyReading = glucoseDataSet.glucoseReadings[selectedReadingIndex].readingsByMeal[key] {
+            if let dailyReading = glucoseDataSet[selectedReadingIndex].readingsByMeal[key] {
                 let formattedTime = dailyReading.time.prefix(5) // Extract HH:mm format
                 cell.tagLabel.text = key // Tag (title)
                 cell.timeLabel.text = "Time: \(formattedTime)" // Time (subtitle)
@@ -63,11 +33,58 @@ class InsightsViewController: UIViewController, UITableViewDelegate, UITableView
         return "Readings"
     }
 
-    
-    
-    
-    
-    //scroll view
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        //headerView.backgroundColor = .lightGray // Background color for header
+        
+        let label = UILabel()
+        label.text = "Readings"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = .black
+        label.textAlignment = .left
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        headerView.addSubview(label)
+        
+        // Set constraints for label
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 6), // Right-aligned with padding
+                   label.centerYAnchor.constraint(equalTo: headerView.centerYAnchor) // Vertically center the label
+        ])
+        
+        return headerView
+    }
+
+    var selectedReadingIndex: Int? // Store the index of the selected reading
+    let glucoseDataSet = GlucoseDataSet.shared.getAllData() // Initialize dataset
+    let readingsTableView = UITableView()
+    let cardView = UIView()
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        view.addSubview(scrollView)
+        
+        scrollView.addSubview(contentView)
+        setupScrollView()
+        // Set up the view's background
+        view.backgroundColor = UIColor.systemGray6
+        
+        readingsTableView.register(GlucoseReadingCell.self, forCellReuseIdentifier: "GlucoseReadingCell")
+
+
+        // Fetch the selected glucose reading using the selected index
+        
+        if let selectedReadingIndex = selectedReadingIndex,
+           selectedReadingIndex >= 0, selectedReadingIndex < glucoseDataSet.count {
+            let selectedReading = glucoseDataSet[selectedReadingIndex]
+            setupAverageBloodGlucoseView(using: selectedReading)
+            setupGraphView(using: selectedReading) // Add this line
+            setupReadingsTableView()
+            
+        } else {
+            print("Invalid or no selected reading index found!")
+        }
+    }
     func setupScrollView() {
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +114,7 @@ class InsightsViewController: UIViewController, UITableViewDelegate, UITableView
     // Set up the average blood glucose view
     func setupAverageBloodGlucoseView(using reading: GlucoseReading) {
         // Card Container
-        contentView.addSubview(cardView)
+        
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 12
         cardView.layer.shadowColor = UIColor.black.cgColor
@@ -118,7 +135,7 @@ class InsightsViewController: UIViewController, UITableViewDelegate, UITableView
         // Average Blood Glucose Title
         let titleLabel = UILabel()
         titleLabel.text = "Average Blood Glucose Level"
-        titleLabel.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        titleLabel.font = UIFont.systemFont(ofSize: 28, weight: .semibold)
         titleLabel.textColor = UIColor.label
         cardView.addSubview(titleLabel)
         
@@ -132,7 +149,7 @@ class InsightsViewController: UIViewController, UITableViewDelegate, UITableView
         // Glucose Value Label
         let glucoseValueLabel = UILabel()
         glucoseValueLabel.text = "\(reading.averageReading) mg/dL" // Now uses Int for averageReading
-        glucoseValueLabel.font = UIFont.systemFont(ofSize: 28, weight: .bold)
+        glucoseValueLabel.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         glucoseValueLabel.textColor = .black
         cardView.addSubview(glucoseValueLabel)
         
@@ -207,9 +224,9 @@ class InsightsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func getFormattedReading(for indexPath: IndexPath) -> String? {
             guard let selectedReadingIndex = selectedReadingIndex else { return nil }
-            let keys = Array(glucoseDataSet.glucoseReadings[selectedReadingIndex].readingsByMeal.keys)
+            let keys = Array(glucoseDataSet[selectedReadingIndex].readingsByMeal.keys)
             let key = keys[indexPath.row]
-            if let dailyReading = glucoseDataSet.glucoseReadings[selectedReadingIndex].readingsByMeal[key] {
+            if let dailyReading = glucoseDataSet[selectedReadingIndex].readingsByMeal[key] {
                 let formattedTime = dailyReading.time.prefix(5) // Extract HH:mm format
                 return "Time: \(formattedTime), Value: \(dailyReading.reading) mg/dL"
             }
@@ -247,13 +264,13 @@ class InsightsViewController: UIViewController, UITableViewDelegate, UITableView
             ])
         }
     func setupGraphView(using reading: GlucoseReading) {
-        contentView.addSubview(chartView)
+       
         chartView.backgroundColor = .white
         chartView.layer.cornerRadius = 14
         chartView.legend.enabled = false
-        chartView.xAxis.drawGridLinesEnabled = false
+        
         contentView.addSubview(chartView)
-        chartView.isUserInteractionEnabled = false
+        
         // Set constraints
         chartView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -311,7 +328,7 @@ class InsightsViewController: UIViewController, UITableViewDelegate, UITableView
         insightsCardView.layer.shadowOpacity = 0.1
         insightsCardView.layer.shadowOffset = CGSize(width: 0, height: 2)
         insightsCardView.layer.shadowRadius = 4
-    
+
         scrollView.addSubview(insightsCardView)
         
         // Constraints for Insights Card View
