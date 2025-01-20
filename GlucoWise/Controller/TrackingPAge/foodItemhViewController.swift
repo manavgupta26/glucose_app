@@ -41,6 +41,7 @@ class foodItemhViewController: UIViewController,UICollectionViewDelegate,UIColle
 
            if indexPath.item == 0 {
                let cell = collectview.dequeueReusableCell(withReuseIdentifier: "imagecell", for: indexPath) as! foodItemimageCollectionViewCell
+               cell.img.image = UIImage(named: "aalo")
                return cell
            } else {
                let cell = collectview.dequeueReusableCell(withReuseIdentifier: "gicell", for: indexPath) as! giIndexCollectionViewCell

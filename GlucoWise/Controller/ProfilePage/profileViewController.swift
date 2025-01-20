@@ -24,7 +24,7 @@ class profileViewController: UIViewController, UITableViewDataSource, UITableVie
     // Section items
     let sectionItems = [
         ["Change Password", "Notification Preference"],
-        ["Progress Summary", "Health Goals", "Reminders"]
+        ["HbA1c Levels", "Health Goals", "Reminders"]
     ]
     // Section icons
     let cellIcons = [
@@ -91,10 +91,10 @@ class profileViewController: UIViewController, UITableViewDataSource, UITableVie
         } else if indexPath.section == 1 {
             if indexPath.row == 0 {
                 // Navigate to "Progress Summary" ViewController
-                let progressSummaryVC = storyboard.instantiateViewController(withIdentifier: "ProgressSummaryVC")
-                progressSummaryVC.title = "Progress Summary" // Set the title for the next screen
+                let HbA1cVC = storyboard.instantiateViewController(withIdentifier: "HbA1c")
+                HbA1cVC.title = "HbA1c Levels" // Set the title for the next screen
                 self.navigationController?.navigationBar.prefersLargeTitles = false
-                self.navigationController?.pushViewController(progressSummaryVC, animated: true)
+                self.navigationController?.pushViewController(HbA1cVC, animated: true)
             } else if indexPath.row == 1 {
                 // Navigate to "Health Goals" ViewController
                 

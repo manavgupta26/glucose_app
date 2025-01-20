@@ -30,6 +30,8 @@ class TrackedMealsPageViewController: UIViewController, UITableViewDelegate, UIT
                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
            ])
        }
+    
+     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
@@ -103,6 +105,8 @@ class TrackedMealsPageViewController: UIViewController, UITableViewDelegate, UIT
             }
             return cell
         }
+    
+    
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
          switch section {
@@ -130,7 +134,11 @@ class TrackedMealsPageViewController: UIViewController, UITableViewDelegate, UIT
     // Handle tap on tracked food item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            showTrackedFoodOptions(for: indexPath.row)
+            let storyboard = UIStoryboard(name: "fooditem", bundle: nil)
+            if let foodItemViewController = storyboard.instantiateViewController(withIdentifier: "foodValues") as? foodvaluesViewController {
+                self.navigationController?.pushViewController(foodItemViewController, animated: true)
+                
+            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -212,22 +220,36 @@ class GlycemicIndicatorCell: UITableViewCell {
         contentView.addSubview(glycemicLoadView)
 
         NSLayoutConstraint.activate([
+            // Glycemic Index View constraints
             glycemicIndexView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            glycemicIndexView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            glycemicIndexView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16), // Adjusted to add vertical padding
             glycemicIndexView.widthAnchor.constraint(equalToConstant: 120),
             glycemicIndexView.heightAnchor.constraint(equalToConstant: 120),
-            
+
+            // Glycemic Load View constraints
             glycemicLoadView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            glycemicLoadView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            glycemicLoadView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16), // Adjusted to add vertical padding
             glycemicLoadView.widthAnchor.constraint(equalToConstant: 120),
-            glycemicLoadView.heightAnchor.constraint(equalToConstant: 120)
+            glycemicLoadView.heightAnchor.constraint(equalToConstant: 120),
+
+            // Ensure bottom of the views align with the content view's bottom
+            glycemicIndexView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16),
+            glycemicLoadView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16)
         ])
     }
 
+    
+  
+
+    
+    
     func configure(glycemicIndex: CGFloat, glycemicLoad: CGFloat, indexValue: Int, loadValue: Int) {
         setupCircularProgress(view: glycemicIndexView, progress: glycemicIndex, title: "Glycemic Index", value: indexValue)
         setupCircularProgress(view: glycemicLoadView, progress: glycemicLoad, title: "Glycemic Load", value: loadValue)
     }
+    
+
+
 
     private func setupCircularProgress(view: UIView, progress: CGFloat, title: String, value: Int) {
         view.subviews.forEach { $0.removeFromSuperview() } // Clear previous subviews

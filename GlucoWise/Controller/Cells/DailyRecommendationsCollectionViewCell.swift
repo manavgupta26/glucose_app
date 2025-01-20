@@ -6,9 +6,12 @@
 //
 
 import UIKit
+protocol DailyRecommendationsCollectionViewCellDelegate: AnyObject {
+    func didTapOnViewRecipieButton()
+}
 
 class DailyRecommendationsCollectionViewCell: UICollectionViewCell {
-    
+    weak var delegate: DailyRecommendationsCollectionViewCellDelegate?
     
     @IBOutlet var lastMealLabel: UILabel!
     
@@ -30,10 +33,7 @@ class DailyRecommendationsCollectionViewCell: UICollectionViewCell {
        print("Recipe button clicked for recommended meal: \(recommendedNextMealLabel.text ?? "Unknown")")
        
     }
-    @objc func viewRecipeButtonTapped(_ sender: UIButton) {
-        print("View Recipe button tapped for next meal: \(recommendedNextMealLabel.text ?? "Unknown Meal")")
-        // Handle any other actions you want to perform on button tap
-    }
+    
 
    
     override init(frame: CGRect) {
@@ -125,7 +125,8 @@ class DailyRecommendationsCollectionViewCell: UICollectionViewCell {
             // Configure image views
              lastMealImage.font = UIFont.systemFont(ofSize: 40, weight: .medium)
             nextMealImage.font = UIFont.systemFont(ofSize: 40, weight: .medium)
-             viewRecipieButton.addTarget(self, action: #selector(viewRecipeButtonTapped(_:)), for: .touchUpInside)
+             viewRecipieButton.addTarget(self, action: #selector(didTapOnViewRecipieButton), for: .touchUpInside)
+
 
                  
             
@@ -331,6 +332,8 @@ class DailyRecommendationsCollectionViewCell: UICollectionViewCell {
             giTooltip.isHidden = true
         }
     }
-
+    @objc func didTapOnViewRecipieButton() {
+        delegate?.didTapOnViewRecipieButton()
+    }
 
 }
