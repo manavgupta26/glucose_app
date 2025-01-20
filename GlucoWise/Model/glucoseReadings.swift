@@ -1,4 +1,6 @@
 // Struct to represent individual meal readings
+
+import Foundation
 struct MealReading {
     var reading: Double       // The glucose level
     var time: String          // Time of the reading in "HH:mm AM/PM" format
@@ -21,7 +23,7 @@ struct GlucoseReading {
 class GlucoseDataSet {
     
     // Example dataset with 7 readings
-    var glucoseReadings: [GlucoseReading] = [
+    private var glucoseReadings: [GlucoseReading] = [
         GlucoseReading(
             date: "01/01/2025",
             averageReading: 120.5,
@@ -128,4 +130,25 @@ class GlucoseDataSet {
             summary: "Higher glucose levels, likely due to a large lunch. Stayed consistent throughout the day."
         )
     ]
+    
+    private init() {}
+    
+    static var shared = GlucoseDataSet()
+    
+    func getData(byDate date: Date) -> GlucoseReading {
+
+        glucoseReadings[glucoseReadings.firstIndex { $0.date == "\(date)" } ?? 0]
+    }
+    
+    func getAllData() -> [GlucoseReading] {
+        glucoseReadings
+    }
+    
+    func getDataCount() -> Int {
+        glucoseReadings.count
+    }
+    
+    func getData(byIndex id: Int) -> GlucoseReading {
+        glucoseReadings[id]
+    }
 }

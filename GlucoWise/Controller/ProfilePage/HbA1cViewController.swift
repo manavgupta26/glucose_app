@@ -2,9 +2,9 @@ import UIKit
 
 class HbA1cViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var glucoseDataSet = GlucoseDataSet() // Use the predefined GlucoseDataSet
+    var glucoseDataSet = GlucoseDataSet.shared.getAllData() // Use the predefined GlucoseDataSet
 
-    let tableView = UITableView(frame: .zero) // Inset grouped style
+    let tableView = UITableView(frame: .zero)
     let recalculateButton = UIButton(type: .system)
 
     override func viewDidLoad() {
@@ -23,8 +23,8 @@ class HbA1cViewController: UIViewController, UITableViewDelegate, UITableViewDat
         recalculateButton.translatesAutoresizingMaskIntoConstraints = false
         recalculateButton.setTitle("Recalculate HbA1c", for: .normal)
         recalculateButton.backgroundColor = UIColor(red: 108/255, green: 171/255, blue: 145/255, alpha: 1.0) // #6cab91
-        recalculateButton.setTitleColor(.white, for: .normal) // White text
-        recalculateButton.layer.cornerRadius = 15 // Rounded corners
+        recalculateButton.setTitleColor(.white, for: .normal)
+        recalculateButton.layer.cornerRadius = 15
         recalculateButton.layer.shadowColor = UIColor.black.cgColor
         recalculateButton.layer.shadowOffset = CGSize(width: 0, height: 3)
         recalculateButton.layer.shadowRadius = 4
@@ -36,8 +36,8 @@ class HbA1cViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine // Ensure lines are visible
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16) // Adjust insets
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "GlucoseCell")
         self.view.addSubview(tableView)
 
@@ -57,7 +57,7 @@ class HbA1cViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     // Calculate HbA1c and show as a popup
     private func updatePredictedHbA1c() {
-        let readings = glucoseDataSet.glucoseReadings.map { $0.averageReading }
+        let readings = glucoseDataSet.map { $0.averageReading }
         let averageGlucose = readings.reduce(0, +) / Double(readings.count)
         let predictedHbA1c = (averageGlucose + 46.7) / 28.7
 
@@ -75,7 +75,6 @@ class HbA1cViewController: UIViewController, UITableViewDelegate, UITableViewDat
             emoji = "😞"
         }
 
-        // Show a popup with the HbA1c value and status
         let alert = UIAlertController(
             title: "Predicted HbA1c",
             message: String(format: "\(emoji) HbA1c: %.2f%%\nStatus: \(status)", predictedHbA1c),
@@ -92,42 +91,31 @@ class HbA1cViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - UITableView DataSource & Delegate
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1 // All readings in one section
+        return 1
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return glucoseDataSet.glucoseReadings.count
+        return glucoseDataSet.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GlucoseCell", for: indexPath)
-        let reading = glucoseDataSet.glucoseReadings[indexPath.row]
+        let reading = glucoseDataSet[indexPath.row]
 
-        cell.textLabel?.text = "\(reading.date) - \(String(format: "%.1f", reading.averageReading)) mg/dL"
-        cell.textLabel?.textColor = .black
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
-
-        // Adjust appearance
-        cell.contentView.backgroundColor = .white
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.text = """
+        Reading: \(String(format: "%.1f", reading.averageReading)) mg/dL
+                \(reading.date)
         
-        cell.contentView.layer.masksToBounds = true // Ensure rounded corners don't overlap
+        """
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+        cell.textLabel?.textColor = .darkGray
+        cell.contentView.backgroundColor = .white
 
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
-
-//// Dummy data structure for demonstration purposes
-//struct GlucoseReading {
-//    let date: String
-//    let averageReading: Double
-//}
-//
-//struct GlucoseDataSet {
-//    var glucoseReadings: [GlucoseReading] = [
-//        GlucoseReading(date: "2025-01-19", averageReading: 110.0),
-//        GlucoseReading(date: "2025-01-18", averageReading: 120.0),
-//        GlucoseReading(date: "2025-01-17", averageReading: 95.0)
-//    ]
-
