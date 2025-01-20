@@ -6,6 +6,10 @@
 //
 
 import UIKit
+protocol TipsCollectionViewCellDelegate: AnyObject {
+    func didTapActionButton()
+}
+
 
 class TipsCollectionViewCell: UICollectionViewCell {
     
@@ -17,9 +21,11 @@ class TipsCollectionViewCell: UICollectionViewCell {
   
     
     @IBOutlet var actionNameBtn: UIButton!
+    weak var delegate: TipsCollectionViewCellDelegate?
     @IBAction func btnPressed(_ sender: UIButton) {
         print("Button pressed")
     }
+    
     override init(frame: CGRect) {
             super.init(frame: frame)
             contentView.backgroundColor = .white
@@ -46,7 +52,7 @@ class TipsCollectionViewCell: UICollectionViewCell {
             actionNameBtn?.setTitle("Learn More", for: .normal)
             actionNameBtn?.tintColor = UIColor(red: 85/255, green: 173/255, blue: 156/255, alpha: 1.0)
         configureUI()
-            actionNameBtn?.addTarget(self, action: #selector(btnPressed(_:)), for: .touchUpInside)
+        actionNameBtn?.addTarget(self, action: #selector(tipsButtonTapped), for: .touchUpInside)
             // Add components to the content view
             contentView.addSubview(tipImageView)
             contentView.addSubview(tipTitleLabel)
@@ -131,4 +137,7 @@ class TipsCollectionViewCell: UICollectionViewCell {
                         actionNameBtn.heightAnchor.constraint(equalToConstant: 40)  
             ])
         }
+    @objc func tipsButtonTapped() {
+        delegate?.didTapActionButton()
+    }
 }

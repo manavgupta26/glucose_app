@@ -3,18 +3,7 @@ import DGCharts
 import Charts
 
 class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, addReadingdelegate{
-    var bloodSugarReadings = [
-        BloodSugarReading(title: "Post Meal", time: "10:00 PM", reading: "120 mg/dL", chartData: [
-            ChartDataEntry(x: 1, y: 120), ChartDataEntry(x: 2, y: 110), ChartDataEntry(x: 3, y: 115)
-        ]),
-        BloodSugarReading(title: "Pre Meal", time: "4:00 PM", reading: "90 mg/dL", chartData: [
-            ChartDataEntry(x: 1, y: 90), ChartDataEntry(x: 2, y: 85), ChartDataEntry(x: 3, y: 95)
-        ]),
-        BloodSugarReading(title: "Fasting", time: "7:00 AM", reading: "85 mg/dL", chartData: [
-            ChartDataEntry(x: 1, y: 85), ChartDataEntry(x: 2, y: 87), ChartDataEntry(x: 3, y: 88)
-        ]),
-        BloodSugarReading(title: "Post Meal", time: "8:00 AM", reading: "145 mg/dL", chartData: [ChartDataEntry(x: 3, y: 140),ChartDataEntry(x: 3, y: 140),ChartDataEntry(x: 3, y: 140)])
-    ]
+    
 
 
     func didAddReading(reading: String, time: String, type: String) {
@@ -236,9 +225,11 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChartCell", for: indexPath) as! ChartCell
             
             // Define titles for each graph
-        let bloodSugarReading = bloodSugarReadings[indexPath.item]
+    let bloodSugarReading = bloodSugarReadings[indexPath.item]
+        
             let data = bloodSugarReading.chartData
-            let title = bloodSugarReading.title
+        let titless = ["Today", "Week", "Month"]
+        let title = titless[indexPath.row]
             cell.configure(with: title, data: data)
             
             return cell

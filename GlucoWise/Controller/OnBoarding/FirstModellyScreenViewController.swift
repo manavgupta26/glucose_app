@@ -8,19 +8,16 @@
 import UIKit
 
 class firstmodallyscreenViewController: UIViewController {
-    
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func continueBtnPressed(_ sender: UIButton) {
-        self.dismiss(animated: true,completion: nil)
-    }
-    
+        // Mark the modal screen as shown
+        UserDefaults.standard.set(true, forKey: "hasShownFirstModalScreen")
+        print("Modal screen shown. Flag updated.") // Debug log
 
+        self.dismiss(animated: true, completion: nil)
+    }
 }

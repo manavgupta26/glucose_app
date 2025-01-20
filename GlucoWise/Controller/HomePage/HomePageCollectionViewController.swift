@@ -3,6 +3,7 @@ let glucoseDataSet = GlucoseDataSet()
 let lastMealDataSet = LastMealDataSet()
 let recommendedMealDataSet = RecommendedMealDataSet()
 let headerHeight: CGFloat = 100
+
 let glucoseD = ["Normal", "High", "Low"]
     let glucoseValues = [60.0, 30.0, 10.0]
     
@@ -12,7 +13,9 @@ let glucoseD = ["Normal", "High", "Low"]
     let stepsD = ["Walking", "Running", "Cycling"]
     let stepsValues = [40.0, 40.0, 20.0]
     
-class HomePageCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class HomePageCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, DailyAverageCollectionViewCellDelegate, DailyRecommendationsCollectionViewCellDelegate, TipsCollectionViewCellDelegate {
+    var selectedtip: Tip = tipsData[0]
+    
     let sectionNames = ["Calendar", "Daily Average", "Dietary Recommendations", "Tips", "Graph Insights"]
     
     
@@ -93,24 +96,53 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             glucoseDataSet.glucoseReadings[indexPath.item].isSelected = true
             
             // Reload the collection view to reflect changes
-            collectionView.reloadData()
+            
             
             // Fetch and display additional details for the selected date
             let selectedReading = glucoseDataSet.glucoseReadings[indexPath.item]
+            selectedIndex=indexPath.item
+            collectionView.reloadData()
             print("Selected Reading: \(selectedReading)")
             
         case 1:
-            // Perform actions for section 1
-            collectionView.reloadData()
+                // Perform actions for section 1
+                print("Action for Section 1")
+                let indexSet = IndexSet(integer: 1)
+                collectionView.reloadSections(indexSet)
+                
+        case 2:
+            // Perform actions for section 2
+            print("Action for Section 2")
+            let indexSet = IndexSet(integer: 2)
+            collectionView.reloadSections(indexSet)
+            
+        case 3:
+            // Handle Tip Selection
+            guard indexPath.item < tipsData.count else {
+                print("Invalid index for tipsData")
+                return
+            }
+            
+            let selectedTip = tipsData[indexPath.item]
+            selectedtip = selectedTip
+            
+            
+            print("Selected Tip: \(selectedTip.name)")
+            
+            // Reload only Section 3
+            let indexSet = IndexSet(integer: 3)
+            collectionView.reloadSections(indexSet)
+                
+           
             
         default:
             break
         }
-
+        
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print("Configuring \(sectionNames[indexPath.section]) cell at indexPath: \(indexPath)")
-
+        
         switch indexPath.section {
         case 0:
             
@@ -139,7 +171,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 cell.dayLabel?.textColor = UIColor.lightGray
                 cell.dateLabel?.textColor = UIColor.lightGray
                 
-                }
+            }
             let cellHeight = cell.bounds.size.height
             let cellWidth = cell.bounds.size.width
             let radius = min(cellHeight, cellWidth) / 2  // Use the smaller dimension to ensure it's circular
@@ -152,16 +184,16 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DailyAverageCell", for: indexPath) as! DailyAverageCollectionViewCell
             cell.contentView.backgroundColor = UIColor.white
-                    cell.contentView.layer.cornerRadius = 12 // Rounded corners
-                    cell.contentView.layer.masksToBounds = true
-                    
-                    // Add shadow for better appearance
-                    cell.layer.shadowColor = UIColor.black.cgColor
-                    cell.layer.shadowOpacity = 0.1
-                    cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-                    cell.layer.shadowRadius = 4
-                    cell.layer.masksToBounds = false
-                    
+            cell.contentView.layer.cornerRadius = 12 // Rounded corners
+            cell.contentView.layer.masksToBounds = true
+            
+            // Add shadow for better appearance
+            cell.layer.shadowColor = UIColor.black.cgColor
+            cell.layer.shadowOpacity = 0.1
+            cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+            cell.layer.shadowRadius = 4
+            cell.layer.masksToBounds = false
+            
             // Display the average in the DailyAverageCollectionViewCell
             if let selectedIndex = glucoseDataSet.glucoseReadings.firstIndex(where: { $0.isSelected }) {
                 let reading = glucoseDataSet.glucoseReadings[selectedIndex]
@@ -188,7 +220,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 cell.glucoseReactionLbl?.image = UIImage(named: "neutralEmoji")
                 print("No data available for the selected date.")
             }
-//            cell.contentView.backgroundColor = UIColor.lightGray
+            cell.delegate = self
+            //            cell.contentView.backgroundColor = UIColor.lightGray
             return cell
             
         case 2:
@@ -205,31 +238,34 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             cell.layer.masksToBounds = false
             if let lastMeal = lastMealDataSet.getLastMeal() {
                 let nextMeal = recommendedMealDataSet.getRecommendedMeal(basedOn: lastMeal.carbs)
-
-                            cell.lastMealImage?.text = lastMeal.emoji
-                            cell.lastMealLabel?.text = "Last Meal: \(lastMeal.name)"
-                            cell.carbsLbl?.text = "Carbs:"
-                            cell.carbsPointer?.progress = Float(lastMeal.carbs) / 100.0
-
-                            if let nextMeal = nextMeal {
-                                cell.nextMealImage?.text = nextMeal.emoji
-                                cell.recommendedNextMealLabel?.text = "Recommended Meal"
-                                cell.nextMealRecommendation?.text = nextMeal.name
-                                cell.gIlbl?.text = "GI:"
-                                cell.GIPointer?.progress = Float(nextMeal.glycemicIndex) / 100.0
-                            } else {
-                                cell.nextMealRecommendation?.text = "No more recommendations available"
-                            }
-                        } else {
-                            cell.recommendedNextMealLabel?.text = "No previous meal available"
-                        }
+                
+                cell.lastMealImage?.text = lastMeal.emoji
+                cell.lastMealLabel?.text = "Last Meal: \(lastMeal.name)"
+                cell.carbsLbl?.text = "Carbs:"
+                cell.carbsPointer?.progress = Float(lastMeal.carbs) / 100.0
+                
+                if let nextMeal = nextMeal {
+                    cell.nextMealImage?.text = nextMeal.emoji
+                    cell.recommendedNextMealLabel?.text = "Recommended Meal"
+                    cell.nextMealRecommendation?.text = nextMeal.name
+                    cell.gIlbl?.text = "GI:"
+                    cell.GIPointer?.progress = Float(nextMeal.glycemicIndex) / 100.0
+                } else {
+                    cell.nextMealRecommendation?.text = "No more recommendations available"
+                }
+            } else {
+                cell.recommendedNextMealLabel?.text = "No previous meal available"
+            }
+            cell.delegate = self
             return cell
             
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TipsCell", for: indexPath) as! TipsCollectionViewCell
             
             
-            let tip = tipsData[indexPath.item] // Assuming tipsData is an array with the tip data
+            let tip = tipsData[indexPath.item]
+            
+            // Assuming tipsData is an array with the tip data
             let glucoseLevel = glucoseLevels[indexPath.item]// Replace this with the actual glucose level from your data
             
             // Setting up the UI elements in the cell
@@ -248,7 +284,7 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             } else {
                 cell.tipImageView?.image = UIImage(named: "neutralEmoji") // Update image based on glucose level
             }
-            
+            cell.delegate=self
             // Return the populated cell
             return cell
             
@@ -256,8 +292,8 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GraphInsightsCell", for: indexPath) as! GraphsInsightsCollectionViewCell
             
             cell.configure(dataset: exampleDataset)
-           
-                        return cell
+            
+            return cell
             
         default:
             return UICollectionViewCell()
@@ -300,28 +336,28 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 
                 section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 50, leading: 5, bottom: 5, trailing: 5)
-                            
                 
-             // Dietary Recommendations Cell
+                
+                // Dietary Recommendations Cell
             case 2:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100))
-                               let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                               let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100))
-                               let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                               section = NSCollectionLayoutSection(group: group)
-                               section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 5, bottom: 5, trailing: 5)
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 5, bottom: 5, trailing: 5)
                 let headerSize = NSCollectionLayoutSize(
-                                widthDimension: .fractionalWidth(1.0),
-                                heightDimension: .absolute(50)
-                            )
-                            let header = NSCollectionLayoutBoundarySupplementaryItem(
-                                layoutSize: headerSize,
-                                elementKind: UICollectionView.elementKindSectionHeader,
-                                alignment: .top
-                            )
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .absolute(50)
+                )
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )
                 header.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 5, trailing: 15)
-                            section.boundarySupplementaryItems = [header]
-                            
+                section.boundarySupplementaryItems = [header]
+                
                 
             case 3: // Tips Cell (Horizontal Scrolling)
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .absolute(250))  // Adjust height and width as needed for tips
@@ -334,42 +370,42 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
                 section.interGroupSpacing = 0  // Spacing between items
                 section.orthogonalScrollingBehavior = .continuous  // Horizontal scrolling for the tips section
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
-                           let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+                let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 header.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 5, trailing: 15)
-                           section.boundarySupplementaryItems = [header]
-
+                section.boundarySupplementaryItems = [header]
+                
             case 4: // Graph Insight Cell
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(250))  // Adjust height and width to fit 3 items horizontally
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-
+                
                 // Group with horizontal arrangement of items
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(250))  // Full width, fixed height for the group
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item, item, item])  // Three items per row (glucose, calories, steps)
-
+                
                 // Section with the group
                 section = NSCollectionLayoutSection(group: group)
-
+                
                 section.interGroupSpacing = 10  // Set spacing between items
                 section.orthogonalScrollingBehavior = .none // Adjust spacing as needed
                 let headerSize = NSCollectionLayoutSize(
-                                widthDimension: .fractionalWidth(1.0),
-                                heightDimension: .absolute(50)
-                            )
-                            let header = NSCollectionLayoutBoundarySupplementaryItem(
-                                layoutSize: headerSize,
-                                elementKind: UICollectionView.elementKindSectionHeader,
-                                alignment: .top
-                            )
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .absolute(50)
+                )
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )
                 header.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 5, trailing: 15)
-                            section.boundarySupplementaryItems = [header]
+                section.boundarySupplementaryItems = [header]
                 
             default:
                 fatalError("Invalid Section Index")
             }
             func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-                   return CGSize(width: collectionView.bounds.width, height: 50)  // Set header height
-               }
+                return CGSize(width: collectionView.bounds.width, height: 50)  // Set header height
+            }
             return section
         }
         
@@ -389,7 +425,49 @@ class HomePageCollectionViewController: UIViewController, UICollectionViewDataSo
         }
         
         return UICollectionReusableView()
-    
-
+        
+        
+    }
+    func didTapInsightsButton() {
+        let storyboard = UIStoryboard(name: "mainPage", bundle: nil)
+        if let insightsVC = storyboard.instantiateViewController(withIdentifier: "insights") as? InsightsViewController {
+            print("Selected Reading Index: \(self.selectedIndex)")
+            insightsVC.selectedReadingIndex = self.selectedIndex
+            insightsVC.selectedReadingIndex? = self.selectedIndex
+            insightsVC.title = "Insights"
+            self.navigationController?.isNavigationBarHidden = false
+            self.navigationController?.navigationBar.prefersLargeTitles = false
+            navigationController?.pushViewController(insightsVC, animated: true)
+            
+        } else {
+            print("ViewController with ID 'insights' not found.")
+        }
+    }
+    func didTapOnViewRecipieButton(){
+        let storyboard = UIStoryboard(name: "mainPage", bundle: nil)
+        if let recipieVC = storyboard.instantiateViewController(withIdentifier: "recipie") as? RecipeViewController {
+            recipieVC.title="Recipie"
+            self.navigationController?.isNavigationBarHidden = false
+            self.navigationController?.navigationBar.prefersLargeTitles = false
+            navigationController?.pushViewController(recipieVC, animated: true)
+        }
+        
+        else {
+            print("ViewController with ID 'recipie' not found.")
+        }
+    }
+    func didTapActionButton(){
+        let storyboard = UIStoryboard(name: "mainPage", bundle: nil)
+        if let tipsVC = storyboard.instantiateViewController(withIdentifier: "tips") as? TipsViewController {
+            tipsVC.title="Tips"
+            tipsVC.tip=self.selectedtip
+            self.navigationController?.isNavigationBarHidden = false
+            self.navigationController?.navigationBar.prefersLargeTitles = false
+            navigationController?.pushViewController(tipsVC, animated: true)
+        }
+        
+        else {
+            print("ViewController with ID 'tips' not found.")
+        }
     }
 }

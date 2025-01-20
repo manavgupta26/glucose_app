@@ -212,12 +212,16 @@ class TrackTrackingViewController: UIViewController {
 
         // Progress Bars
         let stepsPerPillar = max(1, target / 10) // Avoid division by zero
-        for i in 0..<10 {
+        for i in 0..<7 {
             let progressView = UIView()
-            progressView.backgroundColor = i < steps / stepsPerPillar ? color : UIColor.systemGray5
-            progressView.layer.cornerRadius = 0
-            progressView.translatesAutoresizingMaskIntoConstraints = false
-            barStackView.addArrangedSubview(progressView)
+            if i == 6 {
+                        progressView.backgroundColor = UIColor(hex: "#6CAB9C") // Set color for 4th bar
+                    } else {
+                        progressView.backgroundColor = UIColor.systemGray5 // Grey color for other bars
+                    }
+                    progressView.layer.cornerRadius = 0
+                    progressView.translatesAutoresizingMaskIntoConstraints = false
+                    barStackView.addArrangedSubview(progressView)
 
             NSLayoutConstraint.activate([
                 progressView.heightAnchor.constraint(equalToConstant: CGFloat(Int.random(in: 30...80)))
@@ -234,12 +238,6 @@ class TrackTrackingViewController: UIViewController {
             // Steps Label
             stepsLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -16),
             stepsLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 16),
-
-            // Stack View (optional, not used here but kept for future)
-            // stackView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 16),
-            // stackView.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 16),
-            // stackView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -16),
-            // stackView.bottomAnchor.constraint(equalTo: stepsLabel.topAnchor, constant: -8)
             cardView.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             cardView.heightAnchor.constraint(greaterThanOrEqualToConstant: 150)
         ])

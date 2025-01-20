@@ -172,7 +172,7 @@
             </objects>
             <point key="canvasLocation" x="8686.259541984733" y="-570.42253521126759"/>
         </scene>
-        <!--Profile View Controller-->
+        <!--Profile-->
         <scene sceneID="bK0-nL-rUK">
             <objects>
                 <viewController id="aLI-SQ-DDf" customClass="profileViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
@@ -250,7 +250,7 @@
                             <constraint firstItem="gaQ-uL-ukt" firstAttribute="leading" secondItem="5d3-yF-1zd" secondAttribute="leading" id="xWM-oy-off"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="z6c-LP-xWH"/>
+                    <navigationItem key="navigationItem" title="Profile" largeTitleDisplayMode="always" id="z6c-LP-xWH"/>
                     <connections>
                         <outlet property="profileTableView" destination="gaQ-uL-ukt" id="pJ2-Tv-WGx"/>
                     </connections>
@@ -262,7 +262,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="hVs-gE-AxB">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="8AM-Tw-9PW" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabb" automaticallyAdjustsScrollViewInsets="NO" id="8AM-Tw-9PW" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Xw1-bL-UGP">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -823,6 +823,21 @@
             </objects>
             <point key="canvasLocation" x="5852.6717557251905" y="1136.6197183098593"/>
         </scene>
+        <!--HbA 1c View Controller-->
+        <scene sceneID="EOa-0u-1he">
+            <objects>
+                <viewController storyboardIdentifier="HbA1c" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ecN-yy-urt" customClass="HbA1cViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oqz-Q2-Pt2">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Mtm-Dv-6Kc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OR5-W1-dYj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6709" y="1137"/>
+        </scene>
         <!--Reminders View Controller-->
         <scene sceneID="x82-1B-GHT">
             <objects>
@@ -1129,6 +1144,51 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sJv-Lt-DzU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5007" y="-227"/>
+        </scene>
+        <!--Insights View Controller-->
+        <scene sceneID="ApG-nD-0XH">
+            <objects>
+                <viewController storyboardIdentifier="insights" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wOm-ZC-5Kx" customClass="InsightsViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HwI-GC-Q6z">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="g2a-JA-NvO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J1Y-JP-gX5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4285" y="-904"/>
+        </scene>
+        <!--Recipe View Controller-->
+        <scene sceneID="PeF-Ir-odG">
+            <objects>
+                <viewController storyboardIdentifier="recipie" id="fuG-qJ-UgS" customClass="RecipeViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YKd-uA-XxU">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="l1r-wh-BOS"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hP4-T1-U4l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5097" y="-904"/>
+        </scene>
+        <!--Tips View Controller-->
+        <scene sceneID="JBW-6S-fAk">
+            <objects>
+                <viewController storyboardIdentifier="tips" id="oLh-C5-Qfe" customClass="TipsViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="84c-CB-rhF">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="iHe-zW-Dxa"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fkV-Xe-af0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5982" y="-904"/>
         </scene>
     </scenes>
     <resources>
