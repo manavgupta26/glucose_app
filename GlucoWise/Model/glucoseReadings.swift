@@ -79,8 +79,7 @@ class GlucoseDataSet {
                 "Fasting": MealReading(reading: 110.0, time: "06:25 AM", tag: "Fasting", notes: "Woke up feeling a bit groggy"),
                 "Breakfast": MealReading(reading: 125.0, time: "08:30 AM", tag: "Pre Meal", notes: nil),
                 "Lunch": MealReading(reading: 140.0, time: "12:10 PM", tag: "Post Meal", notes: "Heavier lunch"),
-                "Snacks": MealReading(reading: 135.0, time: "04:05 PM", tag: "Pre Workout", notes: "Prepared for exercise"),
-                "Dinner": MealReading(reading: 125.0, time: "07:00 PM", tag: "Post Meal", notes: nil)
+               
             ],
             summary: "Higher than usual readings, especially after lunch. Heavier meal intake led to a noticeable spike."
         ),

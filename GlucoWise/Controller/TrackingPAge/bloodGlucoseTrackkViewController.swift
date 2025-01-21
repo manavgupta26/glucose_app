@@ -4,25 +4,19 @@ import Charts
 
 class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, addReadingdelegate{
     
+    var selectedDateReadings: [String: MealReading] = [:]
 
 
     func didAddReading(reading: String, time: String, type: String) {
         print("hi")
-        let newChartData = [
-               ChartDataEntry(x: 1, y: Double(reading) ?? 0),
-               ChartDataEntry(x: 2, y: Double(reading) ?? 0),
-               ChartDataEntry(x: 3, y: Double(reading) ?? 0)
-           ]
-           
+      
+           guard let readingValue = Double(reading) else { return }
            // Create a new BloodSugarReading object
-        let newReading = BloodSugarReading(title: type, time: time, reading: "\(reading) mg/dL", chartData: newChartData)
-           
-           // Append the new BloodSugarReading object to the array
-           bloodSugarReadings.append(newReading)
-        tableViewHeightConstraint?.constant = CGFloat(bloodSugarReadings.count * 60)
-           // Reload the table view to display the new reading
-        print(bloodSugarReadings)
-        self.tableView.reloadData()
+        let newReading = MealReading(reading: readingValue, time: time, tag: type)
+        selectedDateReadings[type] = newReading
+        tableView.reloadData()
+        tableViewHeightConstraint?.constant = CGFloat(selectedDateReadings.count * 60)
+        tableView.reloadData()
     }
     var collectionView: UICollectionView!
     var pageControl: UIPageControl!
@@ -30,8 +24,10 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
     var scrollView: UIScrollView!
     var contentView: UIView!
     var tableViewHeightConstraint : NSLayoutConstraint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tabBarController?.tabBar.isHidden = false
         
         
             view.backgroundColor = .white
@@ -99,14 +95,15 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
            tableView = UITableView()
            tableView.dataSource = self
            tableView.delegate = self
+        
         tableView.register(bloodReadingsTableViewCell.self, forCellReuseIdentifier: "ReadingCell")
            tableView.isScrollEnabled = false
         tableView.estimatedRowHeight = 60
                 tableView.tableFooterView = UIView()
            contentView.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(bloodSugarReadings.count * 80))
+        tableView.reloadData()
+        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(selectedDateReadings.count * 80))
            // MARK: - Constraints
            NSLayoutConstraint.activate([
                // ScrollView
@@ -159,18 +156,51 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
        
 
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bloodSugarReadings.count
-       }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        updateSelectedDateReadings(for: "01/04/2025")
+    }
+    
+    
+    func updateSelectedDateReadings(for date: String) {
+        print("Updating readings for date: \(date)")
+        let allData = GlucoseDataSet.shared.getAllData()
+        if let glucoseReading = allData.first(where: { $0.date == date }) {
+            print("Found reading for date: \(date)")
+            selectedDateReadings = glucoseReading.readingsByMeal
+        } else {
+            print("No readings found for date: \(date)")
+            selectedDateReadings = [:]
+        }
+        if tableView == nil {
+            print("TableView is nil")
+        }
+        tableView.reloadData() // Ensure this line is reached safely
+    }
 
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-           let cell = tableView.dequeueReusableCell(withIdentifier: "ReadingCell", for: indexPath) as! bloodReadingsTableViewCell
-               let reading = bloodSugarReadings[indexPath.row]
-               cell.titleLabel.text = reading.title
-               cell.timeLabel.text = "At \(reading.time)"
-               cell.readingLabel.text = reading.reading
-               return cell
-       }
+    
+
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return selectedDateReadings.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ReadingCell", for: indexPath) as! bloodReadingsTableViewCell
+        
+        let mealKeys = Array(selectedDateReadings.keys) // Get keys (e.g., "Fasting", "Breakfast")
+        let mealKey = mealKeys[indexPath.row]
+        
+        if let mealReading = selectedDateReadings[mealKey] {
+            cell.titleLabel.text = mealKey // Display the tag (e.g., "Fasting")
+            cell.timeLabel.text = "At \(mealReading.time)" // Display the time
+            cell.readingLabel.text = "\(mealReading.reading)" // Display the reading
+        }
+       
+        
+        return cell
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -179,11 +209,19 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Perform deletion from your data source
-            bloodSugarReadings.remove(at: indexPath.row)
+            // Get the tag (key) of the meal reading to remove
+            let mealType = Array(selectedDateReadings.keys)[indexPath.row]
+            
+            // Remove the item from the dictionary
+            selectedDateReadings.removeValue(forKey: mealType)
             
             // Delete the row from the table view with animation
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            // Adjust table view height after deletion
+            tableViewHeightConstraint?.isActive = false
+            tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(selectedDateReadings.count * 80))
+            tableViewHeightConstraint?.isActive = true
         }
     }
     @objc func addReadingButtonTapped() {

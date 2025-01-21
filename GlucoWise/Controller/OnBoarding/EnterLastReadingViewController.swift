@@ -1,6 +1,6 @@
 import UIKit
 
-class EnterLastReadingViewController: UIViewController {
+class EnterLastReadingViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var textField: UITextField!  // Connect your text field here
     @IBOutlet weak var skipButton: UIBarButtonItem!  // Connect your skip button here
@@ -10,6 +10,9 @@ class EnterLastReadingViewController: UIViewController {
 
         // Set the initial button title
         skipButton.title = "Skip"
+        
+        // Set the delegate for the text field
+        textField.delegate = self
         
         // Add target to detect text changes in the text field
         textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -24,6 +27,19 @@ class EnterLastReadingViewController: UIViewController {
             // If text field has text, set skip button to "Done"
             skipButton.title = "Done"
         }
+    }
+    
+    // Ensure only numeric input is allowed in the text field
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Allow backspace
+        if string.isEmpty {
+            return true
+        }
+        
+        // Check if the replacement string contains only numeric characters
+        let allowedCharacters = CharacterSet.decimalDigits
+        let characterSet = CharacterSet(charactersIn: string)
+        return allowedCharacters.isSuperset(of: characterSet)
     }
     
     @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {

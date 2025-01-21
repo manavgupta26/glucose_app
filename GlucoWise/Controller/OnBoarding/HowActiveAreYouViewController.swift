@@ -2,7 +2,7 @@ import UIKit
 
 class HowActiveAreYouViewController: UIViewController {
 
-    // Outlets for the views containing images
+    // Outlets for the views containing images and labels
     @IBOutlet weak var view1: UIView!
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var view3: UIView!
@@ -42,7 +42,7 @@ class HowActiveAreYouViewController: UIViewController {
         // Deselect the previously selected view
         deselectAllViews()
         
-        // Select the new view and change its background color (or image)
+        // Select the new view and change its background color and text color
         selectView(tappedView)
     }
 
@@ -53,6 +53,9 @@ class HowActiveAreYouViewController: UIViewController {
             if let originalColor = originalBackgroundColors[view] {
                 view.backgroundColor = originalColor
             }
+            
+            // Reset the text color of labels inside each view to their default (e.g., black)
+            updateLabelColor(for: view, to: .black)
         }
     }
 
@@ -61,8 +64,20 @@ class HowActiveAreYouViewController: UIViewController {
         // Set the background color using the hex code #6CAB9D
         view.backgroundColor = UIColor(hex: "#6CAB9D")
         
+        // Change the text color of labels inside the selected view to white
+        updateLabelColor(for: view, to: .white)
+        
         // Keep track of the selected view
         selectedView = view
+    }
+
+    // Helper to update the text color of labels inside a view
+    func updateLabelColor(for view: UIView, to color: UIColor) {
+        for subview in view.subviews {
+            if let label = subview as? UILabel {
+                label.textColor = color
+            }
+        }
     }
     
     @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
@@ -73,5 +88,24 @@ class HowActiveAreYouViewController: UIViewController {
     @IBAction func NextButtonTapped(_ sender: UIButton) {
         // Perform segue when next button is tapped
         self.performSegue(withIdentifier: "lastReading", sender: self)
+    }
+}
+
+// MARK: - UIColor Extension for Hex Colors
+
+extension UIColor {
+    convenience init?(hex: String) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+        
+        var rgb: UInt64 = 0
+        
+        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else { return nil }
+        
+        let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+        let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+        let blue = CGFloat(rgb & 0x0000FF) / 255.0
+        
+        self.init(red: red, green: green, blue: blue, alpha: 1.0)
     }
 }
