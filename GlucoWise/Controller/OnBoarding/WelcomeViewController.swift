@@ -25,7 +25,7 @@ class WelcomeViewController: UIViewController {
     @IBAction func createAccountPressed(_ sender: UIButton) {
         // Initialize the Create Account page
         let storyboard = UIStoryboard(name: "Main", bundle: nil) // Replace "Main" with your storyboard name if different
-        if let createAccountVC = storyboard.instantiateViewController(withIdentifier: "createAccount") as? creatinAccountViewController {
+        if let createAccountVC = storyboard.instantiateViewController(withIdentifier: "createAccount") as? creatingAccountViewController {
             // Push the Create Account page onto the navigation stack
             self.navigationController?.pushViewController(createAccountVC, animated: true)
         }

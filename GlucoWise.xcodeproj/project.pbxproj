@@ -311,7 +311,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AK7WCH3W36;
+				DEVELOPMENT_TEAM = 96269U6A9X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GlucoWise/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -339,7 +339,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AK7WCH3W36;
+				DEVELOPMENT_TEAM = 96269U6A9X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GlucoWise/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -557,7 +557,7 @@
 				6594EE592D00158A00948C56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		6594EE552D00158A00948C56 /* Build configuration list for PBXNativeTarget "GlucoWise" */ = {
 			isa = XCConfigurationList;
@@ -566,7 +566,7 @@
 				6594EE572D00158A00948C56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		6594EE5A2D00158A00948C56 /* Build configuration list for PBXNativeTarget "GlucoWiseTests" */ = {
 			isa = XCConfigurationList;
@@ -575,7 +575,7 @@
 				6594EE5C2D00158A00948C56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		6594EE5D2D00158A00948C56 /* Build configuration list for PBXNativeTarget "GlucoWiseUITests" */ = {
 			isa = XCConfigurationList;
@@ -584,7 +584,7 @@
 				6594EE5F2D00158A00948C56 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

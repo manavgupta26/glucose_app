@@ -6,7 +6,11 @@ class trackMealsViewController: UIViewController, UITableViewDataSource, UITable
     private var tableView: UITableView!
     let meals = ["Breakfast", "Lunch", "Snacks", "Dinner"]
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        
+
         setupCalendarView()
         setupHeader()
         setupTableView()
@@ -267,6 +271,7 @@ class trackMealsViewController: UIViewController, UITableViewDataSource, UITable
         let storyboard = UIStoryboard(name: "TrackedMealsPage", bundle: nil)
         if let vc2 = storyboard.instantiateViewController(withIdentifier: "TrackedMealsVC") as? TrackedMealsPageViewController{
             vc2.setTitle = meals[indexPath.row]
+            vc2.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc2, animated: true)
         }
         

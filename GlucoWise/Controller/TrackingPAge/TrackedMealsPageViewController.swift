@@ -9,6 +9,7 @@ class TrackedMealsPageViewController: UIViewController, UITableViewDelegate, UIT
 
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         self.title = setTitle
         setupTableView()
        // Setup Glycemic Indicators

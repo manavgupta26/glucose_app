@@ -78,17 +78,38 @@ class completeProfileViewController: UIViewController {
             return
         }
         
-        guard let height = heightTextField.text, !height.isEmpty else {
-            showAlert(message: "Please enter your height.")
+        guard isValidAge() else {
+            showAlert(message: "You must be at least 16 years old to register.")
             return
         }
         
-        guard let weight = weightTextField.text, !weight.isEmpty else {
-            showAlert(message: "Please enter your weight.")
+        guard let height = heightTextField.text, !height.isEmpty, isValidNumber(height) else {
+            showAlert(message: "Please enter a valid numeric value for height.")
+            return
+        }
+        
+        guard let weight = weightTextField.text, !weight.isEmpty, isValidNumber(weight) else {
+            showAlert(message: "Please enter a valid numeric value for weight.")
             return
         }
         
         self.performSegue(withIdentifier: "howActive", sender: self)
+    }
+    
+    // MARK: - Validation Helpers
+    private func isValidAge() -> Bool {
+        let calendar = Calendar.current
+        let today = Date()
+        let birthDate = datePicker.date
+        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: today)
+        if let age = ageComponents.year, age >= 16 {
+            return true
+        }
+        return false
+    }
+    
+    private func isValidNumber(_ text: String) -> Bool {
+        return Double(text) != nil
     }
     
     func showAlert(message: String) {
