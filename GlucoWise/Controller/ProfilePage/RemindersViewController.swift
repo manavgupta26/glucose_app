@@ -34,7 +34,7 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
 
     @objc func addReminderButtonTapped() {
         let storyboard = UIStoryboard(name: "mainPage", bundle: nil) // Replace "Main" with your storyboard name
-        guard let addReminderVC = storyboard.instantiateViewController(withIdentifier: "addReminderVC") as? addReminderTableViewController else { return }
+        guard let addReminderVC = storyboard.instantiateViewController(withIdentifier: "addReminderVC") as? AddReminderTableViewController else { return }
         addReminderVC.modalPresentationStyle = .popover
 
       

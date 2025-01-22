@@ -7,7 +7,7 @@
 
 import UIKit
 
-class foodvaluesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FoodDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let nutrients = [("Carbs", "73 g"), ("Protein", "19 g"), ("Fats", "21 g"), ("Fiber", "9 g")]
     private let tableView = UITableView()
     private var quantityDropdown: UIButton!

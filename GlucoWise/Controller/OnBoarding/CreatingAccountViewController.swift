@@ -7,7 +7,7 @@
 
 import UIKit
 
-class creatinAccountViewController: UIViewController {
+class CreatingAccountViewController: UIViewController {
     
     @IBOutlet var namefield: UITextField!
     @IBOutlet var emailfield: UITextField!

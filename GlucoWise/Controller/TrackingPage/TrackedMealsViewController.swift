@@ -1,6 +1,6 @@
 import UIKit
 
-class TrackedMealsPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TrackedMealsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var setTitle : String?
     let tableView = UITableView(frame: .zero, style: .grouped)
     var trackedFoods = ["Allu Paratha", "Curd, Amul"]
@@ -136,7 +136,7 @@ class TrackedMealsPageViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             let storyboard = UIStoryboard(name: "fooditem", bundle: nil)
-            if let foodItemViewController = storyboard.instantiateViewController(withIdentifier: "foodValues") as? foodvaluesViewController {
+            if let foodItemViewController = storyboard.instantiateViewController(withIdentifier: "foodValues") as? FoodDetailViewController {
                 foodItemViewController.navigationItem.title = trackedFoods[indexPath.row]
                 foodItemViewController.imagew = UIImage(named: trackedFoods[indexPath.row])
                 self.navigationController?.pushViewController(foodItemViewController, animated: true)

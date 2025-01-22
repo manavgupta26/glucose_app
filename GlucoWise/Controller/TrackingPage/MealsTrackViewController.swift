@@ -1,6 +1,6 @@
 import UIKit
 
-class trackMealsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MealsTrackViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     private var selectedButton: UIButton?
     private var tableView: UITableView!
@@ -269,7 +269,7 @@ class trackMealsViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyboard = UIStoryboard(name: "TrackedMealsPage", bundle: nil)
-        if let vc2 = storyboard.instantiateViewController(withIdentifier: "TrackedMealsVC") as? TrackedMealsPageViewController{
+        if let vc2 = storyboard.instantiateViewController(withIdentifier: "TrackedMealsVC") as? TrackedMealsViewController{
             vc2.setTitle = meals[indexPath.row]
             vc2.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc2, animated: true)

@@ -11,7 +11,7 @@ protocol addReadingdelegate : AnyObject{
     func didAddReading(reading : String,time : String,type : String)
 }
 
-class addBloodReadingTableViewController: UITableViewController {
+class AddGlucoseReadingTableViewController: UITableViewController {
   
     weak var delegate : addReadingdelegate?
     

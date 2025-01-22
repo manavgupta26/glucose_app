@@ -1,6 +1,6 @@
 import UIKit
 
-class healthGoalsTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class HealthGoalsTableViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     let goals: [String] = ["Blood Sugar Level Goal", "Body Weight Goal", "Daily Activity Goal", "Weight Management Goal"]
     var values = ["120 mg/dL", "100 kg", "30 minutes", "10 %"]
