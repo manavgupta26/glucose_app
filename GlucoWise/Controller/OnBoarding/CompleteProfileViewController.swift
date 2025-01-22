@@ -1,6 +1,6 @@
 import UIKit
 
-class completeProfileViewController: UIViewController {
+class CompleteProfileViewController: UIViewController {
     
     let genderOptions = ["Male", "Female"]
     var genderPicker: UIPickerView!
@@ -121,7 +121,7 @@ class completeProfileViewController: UIViewController {
 
 // MARK: - UIPickerView Delegate and DataSource
 
-extension completeProfileViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension CompleteProfileViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }

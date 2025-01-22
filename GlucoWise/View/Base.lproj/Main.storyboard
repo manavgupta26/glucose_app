@@ -14,7 +14,7 @@
             <objects>
                 <viewController storyboardIdentifier="modalView" title="modalViewController" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="w9B-9I-Vew" customClass="firstmodallyscreenViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9Il-5V-VnH">
-                        <rect key="frame" x="0.0" y="0.0" width="402" height="864"/>
+                        <rect key="frame" x="0.0" y="0.0" width="402" height="874"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Image" translatesAutoresizingMaskIntoConstraints="NO" id="0No-Wx-Daq">
@@ -80,7 +80,7 @@
         <!--Create a new account-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="createAccount" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="creatinAccountViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="createAccount" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="CreatingAccountViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="402" height="864"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -201,21 +201,6 @@
                 <exit id="CYV-6b-J3T" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1285.0746268656715" y="-15.102974828375284"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="9RD-bX-27F">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9SU-4T-YFQ" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4h0-hC-vRL">
-                        <rect key="frame" x="0.0" y="62" width="402" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9uW-5X-cCk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-504" y="-15"/>
         </scene>
         <!--Welcome Back-->
         <scene sceneID="C5a-Wx-SO8">
@@ -625,7 +610,7 @@
         <!--Let's complete your profile-->
         <scene sceneID="egk-Ga-Fg6">
             <objects>
-                <viewController storyboardIdentifier="completeYourProfile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NOf-vH-lA0" customClass="completeProfileViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="completeYourProfile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NOf-vH-lA0" customClass="CompleteProfileViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="X4p-Jq-vAq">
                         <rect key="frame" x="0.0" y="0.0" width="402" height="864"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1157,6 +1142,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="ZTB-Z7-9Kd"/>
         <segue reference="Qms-kH-Ece"/>
     </inferredMetricsTieBreakers>
     <resources>

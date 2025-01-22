@@ -2,13 +2,13 @@ import UIKit
 import DGCharts
 import Charts
 
-class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, addReadingdelegate{
+class BloodGlucoseTrackViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource, addReadingdelegate{
     
     var selectedDateReadings: [String: MealReading] = [:]
 
 
     func didAddReading(reading: String, time: String, type: String) {
-        print("hi")
+        
       
            guard let readingValue = Double(reading) else { return }
            // Create a new BloodSugarReading object
@@ -27,6 +27,7 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateSelectedDateReadings(for: "01/04/2025")
         tabBarController?.tabBar.isHidden = false
         
         
@@ -175,7 +176,7 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
         if tableView == nil {
             print("TableView is nil")
         }
-        tableView.reloadData() // Ensure this line is reached safely
+        
     }
 
     
@@ -226,7 +227,7 @@ class bloodGlucoseTrackkViewController: UIViewController, UICollectionViewDataSo
     }
     @objc func addReadingButtonTapped() {
         let storyboard = UIStoryboard(name: "mainPage", bundle: nil)
-        if let vc2 = storyboard.instantiateViewController(withIdentifier: "addBloodReading") as? addBloodReadingTableViewController{
+        if let vc2 = storyboard.instantiateViewController(withIdentifier: "addBloodReading") as? AddGlucoseReadingTableViewController{
             vc2.title = "Add Reading"
             vc2.delegate = self
                 // Add a cancel button

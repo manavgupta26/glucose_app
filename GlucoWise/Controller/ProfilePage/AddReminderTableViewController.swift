@@ -10,7 +10,7 @@ protocol addReminderDelegate: AnyObject {
     func didAddReminder(title: String, time: Date?, repeatOption: String)
 }
 
-class addReminderTableViewController: UITableViewController{
+class AddReminderTableViewController: UITableViewController{
     weak var delegate: AddReminderDelegate?
     
     

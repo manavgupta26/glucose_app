@@ -7,7 +7,7 @@
 
 import UIKit
 
-class profileTableViewCell: UITableViewCell {
+class ProfileTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var profileviewlabel: UILabel!

@@ -66,7 +66,7 @@
         <!--Add Reading-->
         <scene sceneID="hZI-BY-5GD">
             <objects>
-                <tableViewController storyboardIdentifier="addBloodReading" id="Vyh-R8-ExD" customClass="addBloodReadingTableViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="addBloodReading" id="Vyh-R8-ExD" customClass="AddGlucoseReadingTableViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="dQg-9I-ZKd">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -175,7 +175,7 @@
         <!--Profile-->
         <scene sceneID="bK0-nL-rUK">
             <objects>
-                <viewController id="aLI-SQ-DDf" customClass="profileViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="aLI-SQ-DDf" customClass="ProfileViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wFz-97-0BJ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -213,7 +213,7 @@
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="profileCell" id="Axw-53-wyO" customClass="profileTableViewCell" customModule="GlucoWise" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="profileCell" id="Axw-53-wyO" customClass="ProfileTableViewCell" customModule="GlucoWise" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="250" width="393" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Axw-53-wyO" id="Ggj-CH-ry1">
@@ -723,7 +723,7 @@
         <!--Add Reminder Table View Controller-->
         <scene sceneID="wqf-ft-OVr">
             <objects>
-                <tableViewController storyboardIdentifier="addReminderVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zt6-FP-9Gu" customClass="addReminderTableViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="addReminderVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zt6-FP-9Gu" customClass="AddReminderTableViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="mo3-Wh-rD0">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -897,7 +897,7 @@
         <!--Health Goals Table View Controller-->
         <scene sceneID="wi8-Tz-AjO">
             <objects>
-                <tableViewController storyboardIdentifier="HealthGoalsVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bdJ-Dr-ejo" customClass="healthGoalsTableViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="HealthGoalsVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bdJ-Dr-ejo" customClass="HealthGoalsTableViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="Xka-ih-No2">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -991,10 +991,10 @@
             </objects>
             <point key="canvasLocation" x="5062" y="435"/>
         </scene>
-        <!--Blood Glucose Trackk View Controller-->
+        <!--Blood Glucose Track View Controller-->
         <scene sceneID="yBV-jH-vEd">
             <objects>
-                <viewController storyboardIdentifier="bloodSugar" id="yF2-3r-aGI" customClass="bloodGlucoseTrackkViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="bloodSugar" id="yF2-3r-aGI" customClass="BloodGlucoseTrackViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fXx-Cs-sPX">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1115,10 +1115,10 @@
             </objects>
             <point key="canvasLocation" x="4284.7328244274804" y="434.50704225352115"/>
         </scene>
-        <!--Track Tracking View Controller-->
+        <!--Activity Track View Controller-->
         <scene sceneID="sfm-BM-gd1">
             <objects>
-                <viewController storyboardIdentifier="tracking" id="SV1-vB-AOI" customClass="TrackTrackingViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="tracking" id="SV1-vB-AOI" customClass="ActivityTrackViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cKD-WJ-tnG">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1130,10 +1130,10 @@
             </objects>
             <point key="canvasLocation" x="5853" y="-227"/>
         </scene>
-        <!--Track Meals View Controller-->
+        <!--Meals Track View Controller-->
         <scene sceneID="HLa-s7-kAW">
             <objects>
-                <viewController storyboardIdentifier="meals" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dVe-VH-ZJY" customClass="trackMealsViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="meals" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dVe-VH-ZJY" customClass="MealsTrackViewController" customModule="GlucoWise" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xmM-Do-JOo">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

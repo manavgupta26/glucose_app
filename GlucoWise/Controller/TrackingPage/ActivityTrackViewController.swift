@@ -1,6 +1,6 @@
 import UIKit
 
-class TrackTrackingViewController: UIViewController {
+class ActivityTrackViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class profileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var profileTableView: UITableView!
 
