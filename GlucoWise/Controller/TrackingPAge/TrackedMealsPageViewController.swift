@@ -137,6 +137,8 @@ class TrackedMealsPageViewController: UIViewController, UITableViewDelegate, UIT
         if indexPath.section == 0 {
             let storyboard = UIStoryboard(name: "fooditem", bundle: nil)
             if let foodItemViewController = storyboard.instantiateViewController(withIdentifier: "foodValues") as? foodvaluesViewController {
+                foodItemViewController.navigationItem.title = trackedFoods[indexPath.row]
+                foodItemViewController.imagew = UIImage(named: trackedFoods[indexPath.row])
                 self.navigationController?.pushViewController(foodItemViewController, animated: true)
                 
             }

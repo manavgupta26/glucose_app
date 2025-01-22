@@ -11,6 +11,7 @@ class foodvaluesViewController: UIViewController, UITableViewDataSource, UITable
     private let nutrients = [("Carbs", "73 g"), ("Protein", "19 g"), ("Fats", "21 g"), ("Fiber", "9 g")]
     private let tableView = UITableView()
     private var quantityDropdown: UIButton!
+    var imagew : UIImage!
         private var measureDropdown: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +19,7 @@ class foodvaluesViewController: UIViewController, UITableViewDataSource, UITable
 
         // Configure navigation bar'
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.title = "Aloo Paratha"
+        //navigationItem.title = "Aloo Paratha"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTapped))
 
         setupViews()
@@ -30,7 +31,7 @@ class foodvaluesViewController: UIViewController, UITableViewDataSource, UITable
     
     private func setupViews() {
         // Image
-        let imageView = UIImageView(image: UIImage(named: "aalo"))
+        let imageView = UIImageView(image : imagew)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 16
@@ -75,7 +76,11 @@ class foodvaluesViewController: UIViewController, UITableViewDataSource, UITable
         quantityDropdown.addTarget(self, action: #selector(showQuantityOptions), for: .touchUpInside)
         measureDropdown.addTarget(self, action: #selector(showMeasureOptions), for: .touchUpInside)
 
-        
+        let giContainer = UIView()
+        giContainer.backgroundColor = .white
+        giContainer.layer.cornerRadius = 8
+        giContainer.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(giContainer)
 
         // GI Index View
         let giIndexLabel = UILabel()
@@ -111,12 +116,11 @@ class foodvaluesViewController: UIViewController, UITableViewDataSource, UITable
 
         let giSummaryLabel = UILabel()
         giSummaryLabel.text = """
-        It will take 40 minutes of running to burn 400 calories.
-        Your meal has high carbs. Add more fibre or protein in your next meal to help stabilize blood sugar.
+        It will take 40 minutes of running to burn 400 calories. Your meal has high carbs. Add more fibre or protein in your next meal to help stabilize blood sugar.
         """
-        giSummaryLabel.font = UIFont.systemFont(ofSize: 12)
+        giSummaryLabel.font = UIFont.systemFont(ofSize: 14)
         giSummaryLabel.textColor = .gray
-        giSummaryLabel.numberOfLines = 3
+        giSummaryLabel.numberOfLines = 4
         giSummaryLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(giSummaryLabel)
 
@@ -133,7 +137,7 @@ class foodvaluesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "NutrientCell")
         tableView.layer.cornerRadius = 8
-        tableView.backgroundColor = UIColor.systemGray6
+        //tableView.backgroundColor = UIColor.systemGray6
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
 
@@ -160,31 +164,43 @@ class foodvaluesViewController: UIViewController, UITableViewDataSource, UITable
             measureDropdown.widthAnchor.constraint(equalToConstant: 100),
             measureDropdown.heightAnchor.constraint(equalToConstant: 40),
 
-            giIndexLabel.topAnchor.constraint(equalTo: quantityDropdown.bottomAnchor, constant: 16),
-            giIndexLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            // GI Container
+                giContainer.topAnchor.constraint(equalTo: quantityDropdown.bottomAnchor, constant: 16),
+                giContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                giContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                giContainer.bottomAnchor.constraint(equalTo: giSummaryLabel.bottomAnchor, constant: 16),
 
-            giCircle.topAnchor.constraint(equalTo: giIndexLabel.bottomAnchor, constant: 8),
-            giCircle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            giCircle.widthAnchor.constraint(equalToConstant: 50),
-            giCircle.heightAnchor.constraint(equalToConstant: 50),
+                // GI Index Label
+                giIndexLabel.topAnchor.constraint(equalTo: giContainer.topAnchor, constant: 16),
+                giIndexLabel.leadingAnchor.constraint(equalTo: giContainer.leadingAnchor, constant: 16),
 
-            giValueLabel.centerYAnchor.constraint(equalTo: giCircle.centerYAnchor),
-            giValueLabel.leadingAnchor.constraint(equalTo: giCircle.trailingAnchor, constant: 16),
+                // GI Circle
+                giCircle.topAnchor.constraint(equalTo: giIndexLabel.bottomAnchor, constant: 8),
+                giCircle.leadingAnchor.constraint(equalTo: giContainer.leadingAnchor, constant: 16),
+                giCircle.widthAnchor.constraint(equalToConstant: 50),
+                giCircle.heightAnchor.constraint(equalToConstant: 50),
 
-            giDescriptionLabel.topAnchor.constraint(equalTo: giValueLabel.bottomAnchor, constant: 4),
-            giDescriptionLabel.leadingAnchor.constraint(equalTo: giCircle.trailingAnchor, constant: 16),
+                // GI Value Label
+                giValueLabel.centerYAnchor.constraint(equalTo: giCircle.centerYAnchor),
+                giValueLabel.leadingAnchor.constraint(equalTo: giCircle.trailingAnchor, constant: 16),
 
-            giSummaryLabel.topAnchor.constraint(equalTo: giCircle.bottomAnchor, constant: 16),
-            giSummaryLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            giSummaryLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                // GI Description Label
+                giDescriptionLabel.topAnchor.constraint(equalTo: giValueLabel.bottomAnchor, constant: 4),
+                giDescriptionLabel.leadingAnchor.constraint(equalTo: giCircle.trailingAnchor, constant: 16),
 
-            macronutrientLabel.topAnchor.constraint(equalTo: giSummaryLabel.bottomAnchor, constant: 16),
+                // GI Summary Label
+                giSummaryLabel.topAnchor.constraint(equalTo: giCircle.bottomAnchor, constant: 16),
+                giSummaryLabel.leadingAnchor.constraint(equalTo: giContainer.leadingAnchor, constant: 16),
+            giSummaryLabel.trailingAnchor.constraint(equalTo: giContainer.trailingAnchor, constant: -16),
+            
+            macronutrientLabel.topAnchor.constraint(equalTo: giSummaryLabel.bottomAnchor, constant: 35),
             macronutrientLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
             tableView.topAnchor.constraint(equalTo: macronutrientLabel.bottomAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            tableView.heightAnchor.constraint(equalToConstant: 200)
+            //tableView.heightAnchor.constraint(equalToConstant: 200)
+            tableView.heightAnchor.constraint(equalToConstant: CGFloat(nutrients.count * 40))
         ])
         
     }
