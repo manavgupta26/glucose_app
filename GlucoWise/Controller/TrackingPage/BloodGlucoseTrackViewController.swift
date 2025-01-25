@@ -8,16 +8,29 @@ class BloodGlucoseTrackViewController: UIViewController, UICollectionViewDataSou
 
 
     func didAddReading(reading: String, time: String, type: String) {
-        
-      
-           guard let readingValue = Double(reading) else { return }
-           // Create a new BloodSugarReading object
+        guard let readingValue = Double(reading) else { return }
         let newReading = MealReading(reading: readingValue, time: time, tag: type)
         selectedDateReadings[type] = newReading
         tableView.reloadData()
         tableViewHeightConstraint?.constant = CGFloat(selectedDateReadings.count * 60)
-        tableView.reloadData()
+        
+        // Update chart data
+        let indexPath = IndexPath(item: 0, section: 0) // Assuming the first chart corresponds to "Today"
+        if let chartCell = collectionView.cellForItem(at: indexPath) as? ChartCell {
+            updateChartCell(chartCell, at: indexPath)
+        }
     }
+
+    func updateChartCell(_ cell: ChartCell, at indexPath: IndexPath) {
+        let chartDataEntries: [ChartDataEntry] = selectedDateReadings.values.enumerated().map { index, reading in
+            ChartDataEntry(x: Double(index), y: reading.reading)
+        }
+        
+        let titles = ["Today", "Week", "Month"]
+        let title = titles[indexPath.row]
+        cell.configure(with: title, data: chartDataEntries)
+    }
+
     var collectionView: UICollectionView!
     var pageControl: UIPageControl!
     var tableView: UITableView!
@@ -180,8 +193,6 @@ class BloodGlucoseTrackViewController: UIViewController, UICollectionViewDataSou
     }
 
     
-
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return selectedDateReadings.count
     }
@@ -197,8 +208,6 @@ class BloodGlucoseTrackViewController: UIViewController, UICollectionViewDataSou
             cell.timeLabel.text = "At \(mealReading.time)" // Display the time
             cell.readingLabel.text = "\(mealReading.reading)" // Display the reading
         }
-       
-        
         return cell
     }
 
@@ -225,6 +234,8 @@ class BloodGlucoseTrackViewController: UIViewController, UICollectionViewDataSou
             tableViewHeightConstraint?.isActive = true
         }
     }
+    
+    
     @objc func addReadingButtonTapped() {
         let storyboard = UIStoryboard(name: "mainPage", bundle: nil)
         if let vc2 = storyboard.instantiateViewController(withIdentifier: "addBloodReading") as? AddGlucoseReadingTableViewController{
@@ -233,20 +244,12 @@ class BloodGlucoseTrackViewController: UIViewController, UICollectionViewDataSou
                 // Add a cancel button
                 let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissVC))
                 vc2.navigationItem.leftBarButtonItem = cancelButton
-
-                // Check if vc2 is already embedded in a navigation controller
-                if vc2.navigationController == nil {
                     // Embed vc2 in a navigation controller
                     let navigationController = UINavigationController(rootViewController: vc2)
                     navigationController.modalPresentationStyle = .popover
 
                     // Present the navigation controller
                     self.present(navigationController, animated: true, completion: nil)
-                } else {
-                    // If already embedded, just present vc2
-                    vc2.modalPresentationStyle = .popover
-                    self.present(vc2, animated: true, completion: nil)
-                }
         }
     }
     @objc func dismissVC() {
@@ -262,17 +265,18 @@ class BloodGlucoseTrackViewController: UIViewController, UICollectionViewDataSou
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ChartCell", for: indexPath) as! ChartCell
-            
-            // Define titles for each graph
-    let bloodSugarReading = bloodSugarReadings[indexPath.item]
         
-            let data = bloodSugarReading.chartData
-        let titless = ["Today", "Week", "Month"]
-        let title = titless[indexPath.row]
-            cell.configure(with: title, data: data)
-            
-            return cell
+        let chartDataEntries: [ChartDataEntry] = selectedDateReadings.values.enumerated().map { index, reading in
+            ChartDataEntry(x: Double(index), y: reading.reading)
+        }
+        
+        let titles = ["Today", "Week", "Month"]
+        let title = titles[indexPath.row]
+        cell.configure(with: title, data: chartDataEntries)
+        
+        return cell
     }
+
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == collectionView {

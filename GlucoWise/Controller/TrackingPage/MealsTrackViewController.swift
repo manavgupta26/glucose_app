@@ -5,12 +5,9 @@ class MealsTrackViewController: UIViewController, UITableViewDataSource, UITable
     private var selectedButton: UIButton?
     private var tableView: UITableView!
     let meals = ["Breakfast", "Lunch", "Snacks", "Dinner"]
+    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
-        
-
         setupCalendarView()
         setupHeader()
         setupTableView()
@@ -268,6 +265,7 @@ class MealsTrackViewController: UIViewController, UITableViewDataSource, UITable
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section != 0 {return}
         let storyboard = UIStoryboard(name: "TrackedMealsPage", bundle: nil)
         if let vc2 = storyboard.instantiateViewController(withIdentifier: "TrackedMealsVC") as? TrackedMealsViewController{
             vc2.setTitle = meals[indexPath.row]

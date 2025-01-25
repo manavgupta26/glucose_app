@@ -67,39 +67,46 @@ class TrackedMealsViewController: UIViewController, UITableViewDelegate, UITable
                 
             case 2: // Macronutrients
                 let nutrient = macronutrients[indexPath.row]
-                   cell.textLabel?.text = nutrient.0
-                   
-                   let progressView = UIProgressView(progressViewStyle: .default)
-                   progressView.progress = Float(nutrient.1)
+                cell.textLabel?.text = nutrient.0
+
+                let progressView = UIProgressView(progressViewStyle: .default)
+                progressView.progress = 0 // Start at 0
                 progressView.tintColor = UIColor(hex: "#6CAB9C")
-                   progressView.translatesAutoresizingMaskIntoConstraints = false
-                   
-                   // Label for the macronutrient values
-                   let valueLabel = UILabel()
-                   valueLabel.text = "\(Int(nutrient.1 * 20))/20g" // Assuming a total value of 20g for demonstration
-                   valueLabel.font = UIFont.systemFont(ofSize: 14)
+                progressView.translatesAutoresizingMaskIntoConstraints = false
+
+                // Animate progress after a short delay to ensure the cell is fully loaded
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseInOut, animations: {
+                        progressView.setProgress(Float(nutrient.1), animated: true)
+                    }, completion: nil)
+                }
+
+                // Label for the macronutrient values
+                let valueLabel = UILabel()
+                valueLabel.text = "\(Int(nutrient.1 * 20))/20g" // Assuming a total value of 20g for demonstration
+                valueLabel.font = UIFont.systemFont(ofSize: 14)
                 valueLabel.textColor = .systemGray
                 valueLabel.font = UIFont.systemFont(ofSize: 12)
-                   valueLabel.translatesAutoresizingMaskIntoConstraints = false
-                   
-                   // Clear old subviews to prevent overlap
-                   for subview in cell.contentView.subviews {
-                       subview.removeFromSuperview()
-                   }
-                   
-                   // Add the progress view and the label to the cell content view
-                   cell.contentView.addSubview(progressView)
-                   cell.contentView.addSubview(valueLabel)
-                   
-                   // Constraints for progressView and valueLabel
-                   NSLayoutConstraint.activate([
-                       progressView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-                       progressView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
-                       progressView.widthAnchor.constraint(equalToConstant: 100),
-                       
-                       valueLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor),
-                       valueLabel.trailingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: -8) // Place the label to the left of the progress bar
-                   ])
+                valueLabel.translatesAutoresizingMaskIntoConstraints = false
+
+                // Clear old subviews to prevent overlap
+                for subview in cell.contentView.subviews {
+                    subview.removeFromSuperview()
+                }
+
+                // Add the progress view and the label to the cell content view
+                cell.contentView.addSubview(progressView)
+                cell.contentView.addSubview(valueLabel)
+
+                // Constraints for progressView and valueLabel
+                NSLayoutConstraint.activate([
+                    progressView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
+                    progressView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
+                    progressView.widthAnchor.constraint(equalToConstant: 100),
+                    
+                    valueLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor),
+                    valueLabel.trailingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: -8) // Place the label to the left of the progress bar
+                ])
                 
             default:
                 break
@@ -242,10 +249,6 @@ class GlycemicIndicatorCell: UITableViewCell {
     }
 
     
-  
-
-    
-    
     func configure(glycemicIndex: CGFloat, glycemicLoad: CGFloat, indexValue: Int, loadValue: Int) {
         setupCircularProgress(view: glycemicIndexView, progress: glycemicIndex, title: "Glycemic Index", value: indexValue)
         setupCircularProgress(view: glycemicLoadView, progress: glycemicLoad, title: "Glycemic Load", value: loadValue)
@@ -276,8 +279,19 @@ class GlycemicIndicatorCell: UITableViewCell {
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.strokeColor = UIColor(hex: "#6CAB9C").cgColor
         progressLayer.lineWidth = 7
-        progressLayer.strokeEnd = progress
+        progressLayer.strokeEnd = 0 // Start from 0 for animation
         view.layer.addSublayer(progressLayer)
+
+        // Animate the progress
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.fromValue = 0
+        animation.toValue = progress
+        animation.duration = 1.0 // Duration of animation
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        progressLayer.add(animation, forKey: "progressAnimation")
+
+        // Set the final strokeEnd to persist after animation
+        progressLayer.strokeEnd = progress
 
         // Value label
         let valueLabel = UILabel()
@@ -304,5 +318,6 @@ class GlycemicIndicatorCell: UITableViewCell {
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
+
 }
 

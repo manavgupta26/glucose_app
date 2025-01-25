@@ -31,9 +31,8 @@ class DailyAverageCollectionViewCell: UICollectionViewCell {
         insightsButton = UIButton(type: .system)
         
         glucoseReactionLbl.contentMode = .scaleAspectFit
-        insightsButton.setTitle(">", for: .normal)
-        insightsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        insightsButton.setTitleColor(.systemGray2, for: .normal)
+        insightsButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        insightsButton.tintColor = UIColor(hex: "6CAB9C")
         
         // Add components to the content view
         contentView.addSubview(glucoseLabel)
