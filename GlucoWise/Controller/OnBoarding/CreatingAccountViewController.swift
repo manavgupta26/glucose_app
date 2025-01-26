@@ -1,5 +1,5 @@
 //
-//  creatinAccountViewController.swift
+//  CreatingAccountViewController.swift
 //  GlucoWise
 //
 //  Created by student-2 on 12/12/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreatingAccountViewController: UIViewController {
+class CreatingAccountViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var namefield: UITextField!
     @IBOutlet var emailfield: UITextField!
@@ -17,6 +17,20 @@ class CreatingAccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
+        
+        // Add gesture recognizer to dismiss the keyboard when tapping outside
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
+        
+        // Set the text field delegates to self
+        namefield.delegate = self
+        emailfield.delegate = self
+        pwfield.delegate = self
+        confirmpwfield.delegate = self
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true) // Dismiss the keyboard
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,6 +66,11 @@ class CreatingAccountViewController: UIViewController {
             return false
         }
         
+        guard isValidPassword(password) else {
+            showAlert(message: "Password must be at least 5 characters long and contain at least one special symbol.")
+            return false
+        }
+        
         guard let confirmPassword = confirmpwfield.text, confirmPassword == password else {
             showAlert(message: "Passwords do not match.")
             return false
@@ -72,5 +91,19 @@ class CreatingAccountViewController: UIViewController {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
         return emailPredicate.evaluate(with: email)
+    }
+    
+    // Function to validate password rules
+    private func isValidPassword(_ password: String) -> Bool {
+        let specialCharacterRegex = ".*[!@#$%^&*(),.?\":{}|<>].*"
+        let passwordLengthRule = password.count >= 5
+        let containsSpecialCharacter = NSPredicate(format: "SELF MATCHES %@", specialCharacterRegex).evaluate(with: password)
+        return passwordLengthRule && containsSpecialCharacter
+    }
+    
+    // UITextFieldDelegate method to handle return button
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // Dismiss the keyboard
+        return true
     }
 }

@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             
             // Replace "YourStoryboardName" with the name of the storyboard you're testing
-            let storyboard = UIStoryboard(name: "mainPage", bundle: nil)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewController = storyboard.instantiateInitialViewController()
             
             window.rootViewController = initialViewController

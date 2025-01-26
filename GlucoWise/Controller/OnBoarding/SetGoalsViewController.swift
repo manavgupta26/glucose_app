@@ -13,10 +13,10 @@ class SetGoalsViewController: UIViewController {
         super.viewDidLoad()
 
         // Set initial values for the text fields
-        textField1.text = "0"
-        textField2.text = "0"
-        textField3.text = "0"
-        textField4.text = "0"
+        textField1.text = "170"
+        textField2.text = "120"
+        textField3.text = "6"
+        textField4.text = "145"
     }
 
     @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {

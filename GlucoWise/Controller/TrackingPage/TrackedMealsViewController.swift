@@ -3,8 +3,8 @@ import UIKit
 class TrackedMealsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var setTitle : String?
     let tableView = UITableView(frame: .zero, style: .grouped)
-    var trackedFoods = ["Allu Paratha", "Curd, Amul"]
-    let macronutrients = [("Carbs", 0.9), ("Protein", 0.7), ("Fats", 0.5), ("Fiber", 0.8)]
+    var trackedFoods: [String] = []
+    var macronutrients: [(String, Double)] = []
     
 
     override func viewDidLoad() {
@@ -13,7 +13,53 @@ class TrackedMealsViewController: UIViewController, UITableViewDelegate, UITable
         self.title = setTitle
         setupTableView()
        // Setup Glycemic Indicators
+        fetchMealData()
+     
     }
+    private func fetchMealData() {
+        // Determine the meal type from setTitle
+        guard let mealTypeString = setTitle,
+              let mealType = MealType(rawValue: mealTypeString.lowercased()) else {
+            return
+        }
+        
+        // Format for date comparison (only year, month, and day)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        // Get today's date formatted to yyyy-MM-dd
+        let todayString = dateFormatter.string(from: Date())
+        
+        // Get the meals data from the shared model
+        if let mealsData = MealDataModel.shared.getUserMeals() {
+            // Iterate through the dictionary of mealsData
+            for (date, mealsByType) in mealsData {
+                let storedDateString = dateFormatter.string(from: date)
+                
+                // If the stored date matches today's date, fetch the corresponding meals data
+                if storedDateString == todayString, let mealsForType = mealsByType[mealType] {
+                    print("Meals data for today: \(mealsForType)")  // Debugging log
+                    trackedFoods = mealsForType.map { $0.name }
+                    macronutrients = calculateMacronutrients(from: mealsForType)
+                    return
+                }
+            }
+        }
+        
+        print("No data found for today's meals.")
+    }
+
+
+
+    private func calculateMacronutrients(from foodItems: [FoodItem]) -> [(String, Double)] {
+           let carbs = foodItems.reduce(0) { $0 + $1.carbs }
+           let protein = foodItems.reduce(0) { $0 + $1.protein }
+           let fats = foodItems.reduce(0) { $0 + $1.fats }
+           let fiber = foodItems.reduce(0) { $0 + $1.fiber }
+
+           return [("Carbs", carbs), ("Protein", protein), ("Fats", fats), ("Fiber", fiber)]
+       }
+
     
 
     private func setupTableView() {
@@ -60,10 +106,18 @@ class TrackedMealsViewController: UIViewController, UITableViewDelegate, UITable
                 
             case 1: // Glycemic Indicators
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "glycemicCell", for: indexPath) as? GlycemicIndicatorCell else {
-                                return UITableViewCell()
-                            }
-                            cell.configure(glycemicIndex: 0.45, glycemicLoad: 0.28, indexValue: 45, loadValue: 28)
-                            return cell
+                              return UITableViewCell()
+                          }
+
+                          // Assuming the first food item for demonstration, update as needed
+                let dummyGlycemicIndex = 0.75 // Representing 75% (value between 0.0 and 1.0)
+                let dummyGlycemicLoad = 0.60 // Representing 60% (value between 0.0 and 1.0)
+                let dummyIndexValue = 75 // Glycemic Index as a percentage
+                let dummyLoadValue = 60 // Glycemic Load as a percentage
+
+                cell.configure(glycemicIndex: dummyGlycemicIndex, glycemicLoad: dummyGlycemicLoad, indexValue: dummyIndexValue, loadValue: dummyLoadValue)
+
+                return cell
                 
             case 2: // Macronutrients
                 let nutrient = macronutrients[indexPath.row]
@@ -77,13 +131,13 @@ class TrackedMealsViewController: UIViewController, UITableViewDelegate, UITable
                 // Animate progress after a short delay to ensure the cell is fully loaded
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseInOut, animations: {
-                        progressView.setProgress(Float(nutrient.1), animated: true)
+                        progressView.setProgress(Float(nutrient.1 / 100), animated: true) // Assuming 100g as the max value
                     }, completion: nil)
                 }
 
                 // Label for the macronutrient values
                 let valueLabel = UILabel()
-                valueLabel.text = "\(Int(nutrient.1 * 20))/20g" // Assuming a total value of 20g for demonstration
+                valueLabel.text = "\(Int(nutrient.1))/100g"
                 valueLabel.font = UIFont.systemFont(ofSize: 14)
                 valueLabel.textColor = .systemGray
                 valueLabel.font = UIFont.systemFont(ofSize: 12)
@@ -103,11 +157,10 @@ class TrackedMealsViewController: UIViewController, UITableViewDelegate, UITable
                     progressView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
                     progressView.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -16),
                     progressView.widthAnchor.constraint(equalToConstant: 100),
-                    
+
                     valueLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor),
-                    valueLabel.trailingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: -8) // Place the label to the left of the progress bar
+                    valueLabel.trailingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: -8)
                 ])
-                
             default:
                 break
             }
@@ -131,13 +184,13 @@ class TrackedMealsViewController: UIViewController, UITableViewDelegate, UITable
  
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            if indexPath.section == 0 {
-                trackedFoods.remove(at: indexPath.row)
-            }
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-    }
+         if editingStyle == .delete {
+             if indexPath.section == 0 {
+                 trackedFoods.remove(at: indexPath.row)
+             }
+             tableView.deleteRows(at: [indexPath], with: .fade)
+         }
+     }
 
     // Handle tap on tracked food item
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -152,61 +205,6 @@ class TrackedMealsViewController: UIViewController, UITableViewDelegate, UITable
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
-    // Show options to Edit or Delete the tracked food
-    private func showTrackedFoodOptions(for index: Int) {
-        let foodItem = trackedFoods[index]
-
-        let alertController = UIAlertController(
-            title: "Manage \(foodItem)",
-            message: "What would you like to do?",
-            preferredStyle: .actionSheet
-        )
-
-        // Edit Action
-        alertController.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
-            self.showEditTrackedFoodAlert(for: index)
-        }))
-
-        // Delete Action
-        alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-            self.trackedFoods.remove(at: index)
-            self.tableView.reloadData()
-        }))
-
-        // Cancel Action
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
-        present(alertController, animated: true, completion: nil)
-    }
-
-    // Show alert to edit tracked food
-    private func showEditTrackedFoodAlert(for index: Int) {
-        let alertController = UIAlertController(
-            title: "Edit Tracked Food",
-            message: "Update the name of the food item.",
-            preferredStyle: .alert
-        )
-
-        // Text Field for Input
-        alertController.addTextField { textField in
-            textField.text = self.trackedFoods[index]
-        }
-
-        // Save Action
-        alertController.addAction(UIAlertAction(title: "Save", style: .default, handler: { _ in
-            if let updatedText = alertController.textFields?.first?.text, !updatedText.isEmpty {
-                self.trackedFoods[index] = updatedText
-                self.tableView.reloadData()
-            }
-        }))
-
-        // Cancel Action
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
-        present(alertController, animated: true, completion: nil)
-    }
- 
 
 }
 class GlycemicIndicatorCell: UITableViewCell {
@@ -282,16 +280,19 @@ class GlycemicIndicatorCell: UITableViewCell {
         progressLayer.strokeEnd = 0 // Start from 0 for animation
         view.layer.addSublayer(progressLayer)
 
+        // Add a check to ensure that the progress value is valid before animating
+        let validProgress = min(max(progress, 0), 1) // Ensure progress is between 0 and 1
+
         // Animate the progress
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = 0
-        animation.toValue = progress
+        animation.toValue = validProgress
         animation.duration = 1.0 // Duration of animation
         animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         progressLayer.add(animation, forKey: "progressAnimation")
 
         // Set the final strokeEnd to persist after animation
-        progressLayer.strokeEnd = progress
+        progressLayer.strokeEnd = validProgress
 
         // Value label
         let valueLabel = UILabel()
@@ -318,6 +319,7 @@ class GlycemicIndicatorCell: UITableViewCell {
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
+
 
 }
 

@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "vegetarian-mung-dhal-recipe-3378496-hero-03-f1c34f2638ff46d9880130cda0c61e3e.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

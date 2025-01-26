@@ -1,6 +1,6 @@
 import UIKit
 
-class CompleteProfileViewController: UIViewController {
+class CompleteProfileViewController: UIViewController, UITextFieldDelegate {
     
     let genderOptions = ["Male", "Female"]
     var genderPicker: UIPickerView!
@@ -17,6 +17,8 @@ class CompleteProfileViewController: UIViewController {
         super.viewDidLoad()
         setupGenderPicker()
         setupDatePicker()
+        setupKeyboardDismissGesture()
+        setupTextFieldDelegates()
     }
     
     // MARK: - Gender Picker Setup
@@ -67,6 +69,27 @@ class CompleteProfileViewController: UIViewController {
         dobTextField.resignFirstResponder()
     }
     
+    // MARK: - Dismiss Keyboard
+    func setupKeyboardDismissGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true) // Dismiss the keyboard
+    }
+    
+    func setupTextFieldDelegates() {
+        heightTextField.delegate = self
+        weightTextField.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // Dismiss the keyboard
+        return true
+    }
+    
+    // MARK: - Register Button Action
     @IBAction func registerButtonTapped(_ sender: UIButton) {
         guard let gender = genderTextField.text, !gender.isEmpty else {
             showAlert(message: "Please select your gender.")
@@ -83,13 +106,13 @@ class CompleteProfileViewController: UIViewController {
             return
         }
         
-        guard let height = heightTextField.text, !height.isEmpty, isValidNumber(height) else {
-            showAlert(message: "Please enter a valid numeric value for height.")
+        guard let heightText = heightTextField.text, !heightText.isEmpty, let height = Double(heightText), height >= 140 else {
+            showAlert(message: "Please enter a valid height (at least 140 cm).")
             return
         }
         
-        guard let weight = weightTextField.text, !weight.isEmpty, isValidNumber(weight) else {
-            showAlert(message: "Please enter a valid numeric value for weight.")
+        guard let weightText = weightTextField.text, !weightText.isEmpty, let weight = Double(weightText), weight >= 40 else {
+            showAlert(message: "Please enter a valid weight (at least 40 kg).")
             return
         }
         
@@ -108,10 +131,6 @@ class CompleteProfileViewController: UIViewController {
         return false
     }
     
-    private func isValidNumber(_ text: String) -> Bool {
-        return Double(text) != nil
-    }
-    
     func showAlert(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -120,7 +139,6 @@ class CompleteProfileViewController: UIViewController {
 }
 
 // MARK: - UIPickerView Delegate and DataSource
-
 extension CompleteProfileViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

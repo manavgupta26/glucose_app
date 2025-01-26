@@ -1,4 +1,153 @@
 
+import Foundation
+import UIKit
+
+
+// Food item struct
+struct FoodItem {
+    var name: String
+    var quantity: Double
+    var quantityType: QuantityType
+    var protein: Double
+    var fiber: Double
+    var carbs: Double
+    var fats: Double
+    var calories: Double
+    var glycemicIndex: Double
+    var gl: Double {
+        return (glycemicIndex * carbs) / 100.0
+    }
+    var giProgress: Double {
+           return glycemicIndex / 100.0 // GI is typically on a scale of 0 to 100
+       }
+
+       var glProgress: Double {
+           let maxGL = 30.0 // Define a realistic upper threshold for GL
+           return min(gl / maxGL, 1.0) // Normalize and cap at 1.0 (100%)
+       }
+}
+
+// Quantity type enum
+enum QuantityType: String {
+    case grams, spoon, bowl, piece, ml // Add more as needed
+}
+
+// Meal type enum
+enum MealType: String {
+    case breakfast, lunch, snacks, dinner
+}
+
+class MealDataModel {
+    // Dictionary to hold meal data
+    static let shared = MealDataModel()
+    private var userMeals: [Date: [MealType: [FoodItem]]] = [
+        Date(): [
+            .breakfast: [
+                FoodItem(
+                    name: "Oats",
+                    quantity: 50,
+                    quantityType: .grams,
+                    protein: 5.0,
+                    fiber: 4.0,
+                    carbs: 30.0,
+                    fats: 2.0,
+                    calories: 150,
+                    glycemicIndex: 55
+                ),
+                FoodItem(
+                    name: "Banana",
+                    quantity: 1,
+                    quantityType: .piece,
+                    protein: 1.3,
+                    fiber: 2.6,
+                    carbs: 27.0,
+                    fats: 0.3,
+                    calories: 105,
+                    glycemicIndex: 51
+                )
+            ],
+            .lunch: [
+                FoodItem(
+                    name: "Rajma Curry",
+                    quantity: 150,
+                    quantityType: .grams,
+                    protein: 31.0,
+                    fiber: 0.0,
+                    carbs: 0.0,
+                    fats: 3.6,
+                    calories: 165,
+                    glycemicIndex: 0
+                ),
+                FoodItem(
+                    name: "Fried Rice",
+                    quantity: 100,
+                    quantityType: .grams,
+                    protein: 2.6,
+                    fiber: 1.8,
+                    carbs: 23.0,
+                    fats: 0.9,
+                    calories: 110,
+                    glycemicIndex: 50
+                )
+            ],
+            .snacks: [
+                FoodItem(
+                    name: "Almonds",
+                    quantity: 30,
+                    quantityType: .grams,
+                    protein: 6.0,
+                    fiber: 3.5,
+                    carbs: 6.0,
+                    fats: 14.0,
+                    calories: 160,
+                    glycemicIndex: 15
+                )
+            ],
+            .dinner: [
+                FoodItem(
+                    name: "Yellow Dal",
+                    quantity: 100,
+                    quantityType: .grams,
+                    protein: 25.0,
+                    fiber: 0.0,
+                    carbs: 0.0,
+                    fats: 13.0,
+                    calories: 208,
+                    glycemicIndex: 0
+                ),
+                FoodItem(
+                    name: "Chappati",
+                    quantity: 150,
+                    quantityType: .grams,
+                    protein: 2.0,
+                    fiber: 3.0,
+                    carbs: 10.0,
+                    fats: 0.5,
+                    calories: 50,
+                    glycemicIndex: 15
+                )
+            ]
+        ]
+    ]
+    private init(){}
+    func getUserMeals() -> [Date: [MealType: [FoodItem]]]? {
+            return userMeals
+        }
+    func addFoodItem(date: Date, mealType: MealType, foodItem: FoodItem) {
+          if userMeals[date] == nil {
+              // If no meals exist for the given date, create a new entry for all meal types
+              userMeals[date] = [
+                  .breakfast: [],
+                  .lunch: [],
+                  .snacks: [],
+                  .dinner: []
+              ]
+          }
+          
+          // Add the food item to the specified meal type for the given date
+          userMeals[date]?[mealType]?.append(foodItem)
+      }
+}
 
 
 
@@ -17,34 +166,9 @@
 
 
 
-//import Foundation
-//import UIKit
 //
-//// Food item struct
-//struct FoodItem: Equatable {
-//    var name: String
-//    var quantity: Double
-//    var quantityType: QuantityType
-//    var protein: Double
-//    var fiber: Double
-//    var carbs: Double
-//    var fats: Double
-//    var calories: Double
-//    var glycemicIndex: Double
-//    var gl: Double {
-//        return (glycemicIndex * carbs) / 100.0
-//    }
-//}
+
 //
-//// Quantity type enum
-//enum QuantityType: String {
-//    case grams, spoon, bowl, piece, ml // Add more as needed
-//}
-//
-//// Meal type enum
-//enum MealType: String {
-//    case breakfast, lunch, snacks, dinner
-//}
 //
 //// Meal structure
 //struct Meal {
